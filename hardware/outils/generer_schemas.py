@@ -174,7 +174,7 @@ def feuille_alim():
     # châssis
     add(sh, R('1M', 'CHASSIS', 'GND'))
     add(sh, C('4.7nF 2kV', 'CHASSIS', 'GND', C1206))
-    for _ in range(4):
+    for _ in range(6):   # 4 alignés sur ceux de la carte fille + 2 à l'arrière (connecteurs USB et alim)
         sh.add('Mechanical:MountingHole_Pad', 'H', 'M3', {1: 'CHASSIS'},
                footprint='MountingHole:MountingHole_3.2mm_M3_Pad_Via')
     return sh
@@ -329,7 +329,8 @@ def feuille_b2b(fille):
                    'Brochage commun aux deux cartes : une masse à côté de chaque horloge SPI, 4 broches 5 V\n'
                    '(UCC12050 des ports 5-8, ~0,7 A au pire), 2 broches 3,3 V (MCP2518FD et ISO1042 côté logique).',
                    'Carte mère : embase femelle (PinSocket). Carte fille : barrette mâle (PinHeader), montée en dessous.\n'
-                   'Liaison la plus courte possible (entretoises de 11 mm environ, à fixer avec la mécanique).',
+                   'Hauteur d\'empilage ~15 mm : le DB9 coudé de la carte fille (~12,6 mm de haut) passe sous\n'
+                   'la carte mère. Embase et barrette à choisir pour cette hauteur (voir docs/placement.md).',
                ] + (['Carte fille : la broche 35 (~FILLE_PRESENTE) est reliée à la masse pour signaler sa présence.']
                     if fille else []))
     fp = ('Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical' if fille
@@ -420,9 +421,14 @@ def projet(nom, titre, feuilles, ports):
         doc = schema.build_sheet(sh, nom, root_uuid, tb)
         schema.write(doc, os.path.join(out, sh.file))
     # fichiers de projet
-    with open(os.path.join(out, nom + '.kicad_pro'), 'w') as f:
-        json.dump({'meta': {'filename': nom + '.kicad_pro', 'version': 1},
-                   'sheets': [[root_uuid, '']], 'text_variables': {}}, f, indent=2)
+    # le .kicad_pro garde les réglages de la carte (règles, classes de nets) écrits par placer.py
+    pro = os.path.join(out, nom + '.kicad_pro')
+    d = json.load(open(pro)) if os.path.exists(pro) else {}
+    d.update({'meta': {'filename': nom + '.kicad_pro', 'version': 1}, 'sheets': [[root_uuid, '']]})
+    d.setdefault('text_variables', {})
+    with open(pro, 'w') as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+        f.write('\n')
     with open(os.path.join(out, 'sym-lib-table'), 'w') as f:
         f.write('(sym_lib_table\n  (version 7)\n  (lib (name "can8")(type "KiCad")'
                 '(uri "${KIPRJMOD}/../bibliotheque/can8.kicad_sym")(options "")'

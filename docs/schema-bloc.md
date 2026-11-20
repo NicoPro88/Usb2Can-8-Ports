@@ -94,7 +94,7 @@ Les résistances série de 33 ohms sont placées côté MCU sur SCK et MOSI, et 
 
 ## 4. Connecteur carte à carte (2 × 20, pas 2,54 mm)
 
-Carte mère : embase femelle. Carte fille : barrette mâle. Une masse est placée à côté de chaque horloge SPI.
+Carte mère : embase femelle, montée au dos. Carte fille : barrette mâle, sur le dessus. Une masse est placée à côté de chaque horloge SPI. Les deux empreintes KiCad sont en miroir l'une de l'autre : une fois empilées, les broches de même numéro se font face (vérifié par `placer.py`, voir [`placement.md`](placement.md)).
 
 | Broche | Signal | Broche | Signal |
 |---|---|---|---|
@@ -140,7 +140,7 @@ La nomenclature complète, générée depuis le schéma, est dans `hardware/can8
 | Protection USB | USBLC6-2SC6 | SOT-23-6 | 1 | ≈ 0,4 € | ≈ 0,4 € |
 | Connecteur USB | USB-B coudé blindé | traversant | 1 | ≈ 1 € | ≈ 1 € |
 | Entrée alimentation | Phoenix MSTB 2,5/2-GF-5,08 + fiche MSTB 2,5/2-STF-5,08 | traversant | 1 | ≈ 3 € | ≈ 3 € |
-| Liaison carte à carte | barrette 2 × 20 + embase 2 × 20 | traversant | 1 paire | ≈ 2 € | ≈ 2 € |
+| Liaison carte à carte | barrette 2 × 20 + embase 2 × 20, pour un empilage de ≈ 15 mm | traversant | 1 paire | ≈ 2 à 6 € | ≈ 2 à 6 € |
 
 Total des composants clés : ≈ 130 € par carte complète, hors passifs et circuits imprimés. Le poste principal est l'isolation (ISO1042 + UCC12050 ≈ 76 €), un peu au-dessus de l'estimation de D2 (40 à 60 €), parce que le UCC12050 a été préféré à un module DC/DC bon marché (voir les choix ouverts).
 
@@ -151,7 +151,7 @@ Total des composants clés : ≈ 130 € par carte complète, hors passifs et ci
 - **DC/DC isolé UCC12050** : isolation renforcée 5 kVrms comme l'ISO1042, CMS, broche EN (permet plus tard de couper un port). Alternative moins chère : module 1 W type B0505S (≈ 1,5 à 3 €, 1 à 1,5 kV, plus encombrant).
 - **USB3320 en 3,3 V externe** : VBAT et VDD33 reliés au 3,3 V comme le prévoit la datasheet ; VDD18 est une entrée, d'où un LDO 1,8 V dédié.
 - **Alimentation 5 V par un abaisseur non synchrone 60 V** (TPS54360 + diode B560C) : marge sur les surtensions 24 V, protégée par la TVS SMBJ36CA.
-- **Terminaison 120 ohms par micro-interrupteur, un par port** (décidé par Nicolas le 2026-11-20, plutôt qu'une commande par logiciel) : à placer au bord de la carte, près du DB9, pour rester accessible.
+- **Terminaison 120 ohms par micro-interrupteur, un par port** (décidé par Nicolas le 2026-11-20, plutôt qu'une commande par logiciel) : placé juste derrière le DB9. Ceux de la carte fille sont accessibles par une fenêtre découpée dans la carte mère (voir [`placement.md`](placement.md)).
 - **LED par port pilotées par le MCP2518FD** (GPIO0 = activité, GPIO1 = erreur) : aucun fil supplémentaire sur le connecteur carte à carte.
 
 ## 7. Choix ouverts
@@ -159,7 +159,7 @@ Total des composants clés : ≈ 130 € par carte complète, hors passifs et ci
 | Sujet | Options | Recommandation |
 |---|---|---|
 | DC/DC isolé | UCC12050 (dessiné, ≈ 6 €) ou module 1 W (≈ 2 €) | UCC12050, cohérent avec la priorité à la robustesse |
-| Fixation des DB9 | DB9 coudés sur le bord de chaque carte, cartes empilées à ≈ 11 mm | à confirmer avec le boîtier choisi |
+| Fixation des DB9 | DB9 coudés sur le bord de chaque carte, cartes empilées à ≈ 15 mm (le DB9 de la fille, ≈ 12,6 mm de haut, passe sous la mère) | à confirmer avec le boîtier choisi, voir [`placement.md`](placement.md) |
 
 ## 8. Vérifications faites (v0.2)
 
@@ -182,3 +182,4 @@ Total des composants clés : ≈ 130 € par carte complète, hors passifs et ci
 2. **UCC12050** : la broche 16 est notée GNDS d'après la table des broches. À confirmer sur le dessin du boîtier.
 3. **ERC de KiCad 8 ou 9** à lancer à la première ouverture, en complément des contrôles automatiques.
 4. **Quartz** : ajuster les condensateurs de charge au CL réel des quartz achetés (24, 25 et 40 MHz).
+5. **Placement** : hauteur d'empilage, connecteur carte à carte, LED des ports 5 à 8 et trous de fixation, voir [`placement.md`](placement.md) § 7.

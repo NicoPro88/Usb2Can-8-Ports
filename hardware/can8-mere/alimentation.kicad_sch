@@ -5166,6 +5166,122 @@
           (size 1.27 1.27))
         (justify right) hide)))
   (symbol
+    (lib_id "Mechanical:MountingHole_Pad")
+    (at 266.7 81.28 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid 55c99a34-2a8a-53ae-a1db-81e318b1a8ab)
+    (property "Reference" "H1005"
+      (at 266.7 74.93 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "M3"
+      (at 266.7 76.835 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+      (at 266.7 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (property "Datasheet" "~"
+      (at 266.7 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (pin "1"
+      (uuid 5c2c7e69-eb14-51aa-89c6-528ea0ddcb5e))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
+          (reference "H1005")
+          (unit 1)))))
+  (wire
+    (pts
+      (xy 266.7 83.82)
+      (xy 266.7 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 7c3bc344-b7ba-531a-9ffd-d4320dd5cb96))
+  (global_label "CHASSIS"
+    (shape passive)
+    (at 266.7 86.36 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 4f1fc0b4-aaca-5928-b101-3380637ce0e6)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 266.7 86.36 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (symbol
+    (lib_id "Mechanical:MountingHole_Pad")
+    (at 279.4 81.28 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid b5a6eff6-bd05-55a2-b7e5-c31afef69630)
+    (property "Reference" "H1006"
+      (at 279.4 74.93 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "M3"
+      (at 279.4 76.835 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+      (at 279.4 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (property "Datasheet" "~"
+      (at 279.4 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (pin "1"
+      (uuid 002c4966-9f14-5f35-a700-a13101244087))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
+          (reference "H1006")
+          (unit 1)))))
+  (wire
+    (pts
+      (xy 279.4 83.82)
+      (xy 279.4 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid f920decb-7a58-576b-9645-0575350ea3ab))
+  (global_label "CHASSIS"
+    (shape passive)
+    (at 279.4 86.36 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid b6fd62c3-e658-59d6-acac-bd1f45bf534f)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 279.4 86.36 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (symbol
     (lib_id "power:PWR_FLAG")
     (at 25.4 266.7 0)
     (unit 1)
