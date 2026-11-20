@@ -18,6 +18,8 @@ fp-info-cache
 # Sorties de fabrication générées localement (les versions publiées vont dans hardware/fab/)
 hardware/**/gerbers/
 hardware/**/production/
+# Fichiers intermédiaires du routage automatique (DSN, SES, journaux Freerouting)
+hardware/**/routage/
 
 # --- Firmware (C/C++, STM32CubeIDE, PlatformIO, CMake) ---
 build/
@@ -46,3 +48,5 @@ Thumbs.db
 # --- Python ---
 __pycache__/
 *.pyc
+# modèles 3D des cartes (plusieurs Mo) : régénérés par exporter.sh, livrés à part
+hardware/fab/**/*.step

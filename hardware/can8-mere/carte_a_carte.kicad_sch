@@ -6,7 +6,7 @@
   (title_block
     (title "Connecteur carte à carte (2 x 20, pas 2,54 mm)")
     (date "2026-11-20")
-    (rev "v0.1 (brouillon)")
+    (rev "v0.3")
     (company "Usb2Can-8-Ports")
     (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (comment 2 "Généré par hardware/outils/generer_schemas.py"))
@@ -2399,7 +2399,7 @@
         (size 1.27 1.27))
       (justify left top))
     (uuid e41d2920-8465-5aa4-bfc5-73b747221ece))
-  (text "Carte mère : embase femelle (PinSocket). Carte fille : barrette mâle (PinHeader), montée en dessous.\nLiaison la plus courte possible (entretoises de 11 mm environ, à fixer avec la mécanique)."
+  (text "Carte mère : embase femelle (PinSocket). Carte fille : barrette mâle (PinHeader), montée en dessous.\nHauteur d'empilage ~15 mm : le DB9 coudé de la carte fille (~12,6 mm de haut) passe sous\nla carte mère. Embase et barrette à choisir pour cette hauteur (voir docs/placement.md)."
     (at 25.4 111.74 0)
     (effects
       (font

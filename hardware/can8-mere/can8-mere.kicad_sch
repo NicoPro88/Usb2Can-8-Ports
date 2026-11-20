@@ -6,7 +6,7 @@
   (title_block
     (title "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (date "2026-11-20")
-    (rev "v0.1 (brouillon)")
+    (rev "v0.3")
     (company "Usb2Can-8-Ports")
     (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (comment 2 "Généré par hardware/outils/generer_schemas.py"))

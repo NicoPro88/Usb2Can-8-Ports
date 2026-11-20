@@ -6,7 +6,7 @@
   (title_block
     (title "Microcontrôleur STM32H723ZGT6")
     (date "2026-11-20")
-    (rev "v0.1 (brouillon)")
+    (rev "v0.3")
     (company "Usb2Can-8-Ports")
     (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (comment 2 "Généré par hardware/outils/generer_schemas.py"))
@@ -4858,6 +4858,13 @@
       (width 0)
       (type default))
     (uuid 1858c7bf-00c2-5ae6-8501-d10c53fb9acb))
+  (label "VCAP2"
+    (at 45.72 208.28 180)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right bottom))
+    (uuid 80cd47bc-833d-5384-b658-3988b5ac5b47))
   (wire
     (pts
       (xy 48.26 210.82)
@@ -4866,21 +4873,13 @@
       (width 0)
       (type default))
     (uuid 2ff59cae-a7df-564c-a72f-10448d8d31db))
-  (wire
-    (pts
-      (xy 45.72 208.28)
-      (xy 45.72 210.82))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid a0b1f87d-893b-54dc-8d6a-1dcd8641ee6d))
-  (label "VCAP"
-    (at 45.72 208.28 180)
+  (label "VCAP1"
+    (at 45.72 210.82 180)
     (effects
       (font
         (size 1.27 1.27))
       (justify right bottom))
-    (uuid 80cd47bc-833d-5384-b658-3988b5ac5b47))
+    (uuid ef32fa0a-88c6-5945-97ec-ac7694398ff4))
   (no_connect
     (at 116.84 50.8)
     (uuid d4980b1d-f65c-5c11-b409-238a857d73e0))
@@ -8062,31 +8061,31 @@
           (unit 1)))))
   (symbol
     (lib_id "Device:C")
-    (at 320.04 45.72 0)
+    (at 320.04 48.26 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid 8aeac44a-393e-5d8b-a5bc-26e57f5dcf0e)
     (property "Reference" "C1116"
-      (at 320.675 43.18 0)
+      (at 320.675 45.72 0)
       (effects
         (font
           (size 1.27 1.27))
         (justify left)))
     (property "Value" "2.2uF"
-      (at 320.675 48.26 0)
+      (at 320.675 50.8 0)
       (effects
         (font
           (size 1.27 1.27))
         (justify left)))
     (property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-      (at 321.005 49.53 0)
+      (at 321.005 52.07 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Datasheet" "~"
-      (at 320.04 45.72 0)
+      (at 320.04 48.26 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
@@ -8101,14 +8100,14 @@
           (unit 1)))))
   (wire
     (pts
-      (xy 320.04 41.91)
-      (xy 320.04 39.37))
+      (xy 320.04 44.45)
+      (xy 320.04 41.91))
     (stroke
       (width 0)
       (type default))
     (uuid d17e722f-a7b9-5d84-a6db-d0e0a8f7efff))
-  (label "VCAP"
-    (at 320.04 39.37 90)
+  (label "VCAP1"
+    (at 320.04 41.91 90)
     (effects
       (font
         (size 1.27 1.27))
@@ -8116,37 +8115,37 @@
     (uuid 97ab9615-b623-5c54-a8f1-1f513dfaf15c))
   (wire
     (pts
-      (xy 320.04 49.53)
-      (xy 320.04 52.07))
+      (xy 320.04 52.07)
+      (xy 320.04 54.61))
     (stroke
       (width 0)
       (type default))
     (uuid 5ca5f5ec-01b7-5c1b-b399-a60c5a2a8736))
   (symbol
     (lib_id "power:GND")
-    (at 320.04 52.07 0)
+    (at 320.04 54.61 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid be0926dc-42a9-5e20-a8c2-e9df044853cb)
     (property "Reference" "#PWR11034"
-      (at 320.04 58.42 0)
+      (at 320.04 60.96 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Value" "GND"
-      (at 320.04 55.88 0)
+      (at 320.04 58.42 0)
       (effects
         (font
           (size 1.27 1.27))))
     (property "Footprint" ""
-      (at 320.04 52.07 0)
+      (at 320.04 54.61 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Datasheet" ""
-      (at 320.04 52.07 0)
+      (at 320.04 54.61 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
@@ -8159,31 +8158,31 @@
           (unit 1)))))
   (symbol
     (lib_id "Device:C")
-    (at 332.74 45.72 0)
+    (at 332.74 48.26 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid 7bd68138-7fbb-5534-8245-7c4f906a82e8)
     (property "Reference" "C1117"
-      (at 333.375 43.18 0)
+      (at 333.375 45.72 0)
       (effects
         (font
           (size 1.27 1.27))
         (justify left)))
     (property "Value" "2.2uF"
-      (at 333.375 48.26 0)
+      (at 333.375 50.8 0)
       (effects
         (font
           (size 1.27 1.27))
         (justify left)))
     (property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
-      (at 333.705 49.53 0)
+      (at 333.705 52.07 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Datasheet" "~"
-      (at 332.74 45.72 0)
+      (at 332.74 48.26 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
@@ -8198,14 +8197,14 @@
           (unit 1)))))
   (wire
     (pts
-      (xy 332.74 41.91)
-      (xy 332.74 39.37))
+      (xy 332.74 44.45)
+      (xy 332.74 41.91))
     (stroke
       (width 0)
       (type default))
     (uuid cbcf940c-3fac-55fa-9d8b-96d326394a49))
-  (label "VCAP"
-    (at 332.74 39.37 90)
+  (label "VCAP2"
+    (at 332.74 41.91 90)
     (effects
       (font
         (size 1.27 1.27))
@@ -8213,37 +8212,37 @@
     (uuid 5f5430be-50d7-5c51-ae91-fdf1c5c99e3c))
   (wire
     (pts
-      (xy 332.74 49.53)
-      (xy 332.74 52.07))
+      (xy 332.74 52.07)
+      (xy 332.74 54.61))
     (stroke
       (width 0)
       (type default))
     (uuid 3d2c4a6d-5e42-5893-9ce2-c46c4eb6b85d))
   (symbol
     (lib_id "power:GND")
-    (at 332.74 52.07 0)
+    (at 332.74 54.61 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid a96aac00-89b1-5ce6-b951-de234b187f30)
     (property "Reference" "#PWR11035"
-      (at 332.74 58.42 0)
+      (at 332.74 60.96 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Value" "GND"
-      (at 332.74 55.88 0)
+      (at 332.74 58.42 0)
       (effects
         (font
           (size 1.27 1.27))))
     (property "Footprint" ""
-      (at 332.74 52.07 0)
+      (at 332.74 54.61 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Datasheet" ""
-      (at 332.74 52.07 0)
+      (at 332.74 54.61 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
@@ -8716,7 +8715,7 @@
         (font
           (size 1.27 1.27))
         (justify left)))
-    (property "Value" "10pF"
+    (property "Value" "15pF"
       (at 422.275 50.8 0)
       (effects
         (font
@@ -8813,7 +8812,7 @@
         (font
           (size 1.27 1.27))
         (justify left)))
-    (property "Value" "10pF"
+    (property "Value" "15pF"
       (at 432.435 53.34 0)
       (effects
         (font

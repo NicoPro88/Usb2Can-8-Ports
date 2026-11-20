@@ -6,7 +6,7 @@
   (title_block
     (title "Alimentation 9-36 V -> 5 V -> 3,3 V")
     (date "2026-11-20")
-    (rev "v0.1 (brouillon)")
+    (rev "v0.3")
     (company "Usb2Can-8-Ports")
     (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (comment 2 "Généré par hardware/outils/generer_schemas.py"))
@@ -1489,12 +1489,12 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "Alim 9-36V"
+    (property "Value" "MSTB 2,5/2-GF-5,08"
       (at 45.72 40.64 0)
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Footprint" "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MSTBA-2,5-2-G-5,08_1x02_P5.08mm_Horizontal"
+    (property "Footprint" "Connector_Phoenix_MSTB:PhoenixContact_MSTB_2,5_2-GF-5,08_1x02_P5.08mm_Horizontal_ThreadedFlange"
       (at 45.72 35.56 0)
       (effects
         (font
@@ -1584,7 +1584,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "PTC 1,1A 60V"
+    (property "Value" "2920L110/60MR"
       (at 58.42 50.8 90)
       (effects
         (font
@@ -2363,7 +2363,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "442k"
+    (property "Value" "523k 1%"
       (at 231.14 45.72 90)
       (effects
         (font
@@ -2438,7 +2438,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "90.9k"
+    (property "Value" "84.5k 1%"
       (at 241.3 45.72 90)
       (effects
         (font
@@ -2533,7 +2533,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "196k"
+    (property "Value" "200k 1%"
       (at 254 45.72 90)
       (effects
         (font
@@ -2792,7 +2792,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "10uH Isat>=4A"
+    (property "Value" "15uH Isat>=6A"
       (at 311.785 45.72 90)
       (effects
         (font
@@ -3077,7 +3077,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Value" "16.9k"
+    (property "Value" "9.09k 1%"
       (at 342.9 45.72 90)
       (effects
         (font
@@ -3145,7 +3145,7 @@
         (font
           (size 1.27 1.27))
         (justify left)))
-    (property "Value" "4.7nF"
+    (property "Value" "15nF"
       (at 356.235 53.34 0)
       (effects
         (font
@@ -3242,7 +3242,7 @@
         (font
           (size 1.27 1.27))
         (justify left)))
-    (property "Value" "47pF"
+    (property "Value" "68pF"
       (at 368.935 48.26 0)
       (effects
         (font
@@ -5166,13 +5166,129 @@
           (size 1.27 1.27))
         (justify right) hide)))
   (symbol
+    (lib_id "Mechanical:MountingHole_Pad")
+    (at 266.7 81.28 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid 55c99a34-2a8a-53ae-a1db-81e318b1a8ab)
+    (property "Reference" "H1005"
+      (at 266.7 74.93 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "M3"
+      (at 266.7 76.835 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+      (at 266.7 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (property "Datasheet" "~"
+      (at 266.7 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (pin "1"
+      (uuid 5c2c7e69-eb14-51aa-89c6-528ea0ddcb5e))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
+          (reference "H1005")
+          (unit 1)))))
+  (wire
+    (pts
+      (xy 266.7 83.82)
+      (xy 266.7 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 7c3bc344-b7ba-531a-9ffd-d4320dd5cb96))
+  (global_label "CHASSIS"
+    (shape passive)
+    (at 266.7 86.36 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 4f1fc0b4-aaca-5928-b101-3380637ce0e6)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 266.7 86.36 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (symbol
+    (lib_id "Mechanical:MountingHole_Pad")
+    (at 279.4 81.28 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid b5a6eff6-bd05-55a2-b7e5-c31afef69630)
+    (property "Reference" "H1006"
+      (at 279.4 74.93 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Value" "M3"
+      (at 279.4 76.835 0)
+      (effects
+        (font
+          (size 1.27 1.27))))
+    (property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+      (at 279.4 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (property "Datasheet" "~"
+      (at 279.4 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27)) hide))
+    (pin "1"
+      (uuid 002c4966-9f14-5f35-a700-a13101244087))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
+          (reference "H1006")
+          (unit 1)))))
+  (wire
+    (pts
+      (xy 279.4 83.82)
+      (xy 279.4 86.36))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid f920decb-7a58-576b-9645-0575350ea3ab))
+  (global_label "CHASSIS"
+    (shape passive)
+    (at 279.4 86.36 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid b6fd62c3-e658-59d6-acac-bd1f45bf534f)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 279.4 86.36 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (symbol
     (lib_id "power:PWR_FLAG")
     (at 25.4 266.7 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid 01911ace-9ca2-5dee-a612-5af18f755079)
+    (uuid c8bf386f-f331-52e4-9fb1-a7c11a790186)
     (property "Reference" "#FLG10036"
       (at 25.4 264.795 0)
       (effects
@@ -5194,7 +5310,7 @@
         (font
           (size 1.27 1.27)) hide))
     (pin "1"
-      (uuid 241f70b7-d5ab-5a65-9d5d-e818c4c3f31c))
+      (uuid 4002fff4-ab04-5332-bb5a-3ac081f3cb3c))
     (instances
       (project "can8-mere"
         (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
@@ -5207,42 +5323,22 @@
     (stroke
       (width 0)
       (type default))
-    (uuid ff7c5cd9-52cb-5db0-b1ee-b9ff2dc1ba62))
-  (symbol
-    (lib_id "power:GND")
-    (at 25.4 269.24 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid ff8622ac-6f61-5765-b36d-e8b93a1c9603)
-    (property "Reference" "#PWR10037"
-      (at 25.4 275.59 0)
-      (effects
-        (font
-          (size 1.27 1.27)) hide))
-    (property "Value" "GND"
-      (at 25.4 273.05 0)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Footprint" ""
+    (uuid 2912917c-026d-5a3b-8f1f-e7f019507f81))
+  (global_label "+VIN"
+    (shape passive)
+    (at 25.4 269.24 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 91e2f4aa-3f34-5566-98b6-edb2d780122e)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
       (at 25.4 269.24 0)
       (effects
         (font
-          (size 1.27 1.27)) hide))
-    (property "Datasheet" ""
-      (at 25.4 269.24 0)
-      (effects
-        (font
-          (size 1.27 1.27)) hide))
-    (pin "1"
-      (uuid 4ac0e5a8-895e-5035-bf04-2fff99254fa7))
-    (instances
-      (project "can8-mere"
-        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
-          (reference "#PWR10037")
-          (unit 1)))))
+          (size 1.27 1.27))
+        (justify right) hide)))
   (symbol
     (lib_id "power:PWR_FLAG")
     (at 48.26 266.7 0)
@@ -5250,8 +5346,8 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid c8bf386f-f331-52e4-9fb1-a7c11a790186)
-    (property "Reference" "#FLG10038"
+    (uuid 2bcb9368-c731-5fc9-9c0b-9ee9839d6460)
+    (property "Reference" "#FLG10037"
       (at 48.26 264.795 0)
       (effects
         (font
@@ -5272,11 +5368,11 @@
         (font
           (size 1.27 1.27)) hide))
     (pin "1"
-      (uuid 4002fff4-ab04-5332-bb5a-3ac081f3cb3c))
+      (uuid 27f19789-3a57-577c-be50-c76ca9de6456))
     (instances
       (project "can8-mere"
         (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
-          (reference "#FLG10038")
+          (reference "#FLG10037")
           (unit 1)))))
   (wire
     (pts
@@ -5285,90 +5381,32 @@
     (stroke
       (width 0)
       (type default))
-    (uuid 2912917c-026d-5a3b-8f1f-e7f019507f81))
-  (global_label "+VIN"
-    (shape passive)
-    (at 48.26 269.24 270)
-    (fields_autoplaced)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify right))
-    (uuid 91e2f4aa-3f34-5566-98b6-edb2d780122e)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 48.26 269.24 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (justify right) hide)))
-  (symbol
-    (lib_id "power:PWR_FLAG")
-    (at 71.12 266.7 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid 2bcb9368-c731-5fc9-9c0b-9ee9839d6460)
-    (property "Reference" "#FLG10039"
-      (at 71.12 264.795 0)
-      (effects
-        (font
-          (size 1.27 1.27)) hide))
-    (property "Value" "PWR_FLAG"
-      (at 71.12 262.89 0)
-      (effects
-        (font
-          (size 1.27 1.27))))
-    (property "Footprint" ""
-      (at 71.12 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27)) hide))
-    (property "Datasheet" "~"
-      (at 71.12 266.7 0)
-      (effects
-        (font
-          (size 1.27 1.27)) hide))
-    (pin "1"
-      (uuid 27f19789-3a57-577c-be50-c76ca9de6456))
-    (instances
-      (project "can8-mere"
-        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
-          (reference "#FLG10039")
-          (unit 1)))))
-  (wire
-    (pts
-      (xy 71.12 266.7)
-      (xy 71.12 269.24))
-    (stroke
-      (width 0)
-      (type default))
     (uuid 8fcf60e5-63cb-5561-9c8c-851854e345da))
   (symbol
     (lib_id "power:+5V")
-    (at 71.12 269.24 180)
+    (at 48.26 269.24 180)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid 9a9ecb49-1e10-5ab3-93dc-7ebacd139144)
-    (property "Reference" "#PWR10040"
-      (at 71.12 265.43 0)
+    (property "Reference" "#PWR10038"
+      (at 48.26 265.43 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Value" "+5V"
-      (at 71.12 272.796 0)
+      (at 48.26 272.796 0)
       (effects
         (font
           (size 1.27 1.27))))
     (property "Footprint" ""
-      (at 71.12 269.24 0)
+      (at 48.26 269.24 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
     (property "Datasheet" ""
-      (at 71.12 269.24 0)
+      (at 48.26 269.24 0)
       (effects
         (font
           (size 1.27 1.27)) hide))
@@ -5377,7 +5415,7 @@
     (instances
       (project "can8-mere"
         (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531/f2d36338-5012-5e82-baaf-6923e7402118"
-          (reference "#PWR10040")
+          (reference "#PWR10038")
           (unit 1)))))
   (text "Entrée 9 à 36 V (12/24 V véhicule ou industriel) : PTC, TVS bidirectionnelle 36 V,\ndiode série anti-inversion, puis abaisseur TPS54360 (60 V, 3,5 A, non synchrone) vers 5 V."
     (at 25.4 123.5 0)
@@ -5386,24 +5424,31 @@
         (size 1.27 1.27))
       (justify left top))
     (uuid c107710b-1fda-5e90-ba6a-1e57ef5b0a79))
-  (text "À CALCULER (TI WEBENCH / feuille de calcul TPS54360) : fréquence (RT = 196k -> ~500 kHz),\nseuil UVLO (pont EN), compensation (RC/CC/CP), inductance et capacités de sortie. Valeurs indicatives."
+  (text "TPS54360 (calculs : docs/calculs-alimentation.md) : fsw 500 kHz (RT 200k), UVLO 8 V / 6,25 V (523k / 84,5k),\nsortie 5 V (53,6k / 10,2k), L = 15 uH (Isat >= 6 A), 2 x 47 uF, compensation 9,09k + 15 nF // 68 pF (fc ~16 kHz)."
     (at 25.4 138.5 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left top))
     (uuid a85ab9b6-f4a9-5e56-8542-7cfde6d64a43))
-  (text "Budget : ~6,5 W au pire (D4). 5 V : 8 x UCC12050 + LDO 3,3 V. 3,3 V : MCU, PHY, 8 x MCP2518FD."
+  (text "PTC : Littelfuse 2920L110/60MR (1,1 A maintenu à 23 °C, 60 V). Au pire cas (9 V, 8 bus en court-circuit,\nboîtier chaud) le courant d'entrée approche le seuil : déclenchement possible, sans dommage (réarmable)."
     (at 25.4 153.5 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left top))
     (uuid 44d55dc9-1458-5ea8-ad7a-3c6e7aca410c))
-  (text "Châssis : trous de fixation et blindages (USB, DB9) reliés à GND par 1 Mohm // 4,7 nF 2 kV."
-    (at 25.4 163.5 0)
+  (text "Budget : ~6,5 W au pire (D4). 5 V : 8 x UCC12050 + LDO 3,3 V. 3,3 V : MCU, PHY, 8 x MCP2518FD."
+    (at 25.4 168.5 0)
     (effects
       (font
         (size 1.27 1.27))
       (justify left top))
-    (uuid c7e8e3c6-718a-5996-8ec1-185a6858e8f9)))
+    (uuid c7e8e3c6-718a-5996-8ec1-185a6858e8f9))
+  (text "Châssis : trous de fixation et blindages (USB, DB9) reliés à GND par 1 Mohm // 4,7 nF 2 kV."
+    (at 25.4 178.5 0)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left top))
+    (uuid 716a6e15-5738-5335-83ae-8a439f0e3469)))
