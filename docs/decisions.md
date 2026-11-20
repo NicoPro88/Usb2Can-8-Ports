@@ -171,6 +171,73 @@ Conséquences :
 
 ---
 
+## D6. Contrôleurs CAN et microcontrôleur
+
+**Statut : proposé le 2026-11-20, en attente de validation** : option B (8 × MCP2518FD en SPI) avec un STM32U5A5 (USB High Speed à PHY intégré).
+
+### Besoins issus de D1 à D5
+
+- USB 2.0 High Speed, un seul périphérique gs_usb à 8 voies (D1, D5).
+- 8 contrôleurs compatibles CAN FD, la v1 tourne en CAN 2.0B à 500 kbit/s (D1).
+- Chaque port passe par un ISO1042 : le contrôleur reste côté logique, seul le couple TX/RX traverse la barrière (D2).
+- Ports 1 à 4 sur la carte mère, ports 5 à 8 sur la carte fille, liaison par connecteur carte à carte (D3).
+
+### Charge à absorber
+
+- Pire cas CAN 2.0B : environ 4 500 trames/s par port à 100 % de charge, soit environ 36 000 trames/s pour 8 ports.
+- Lecture d'une trame reçue sur un MCP2518FD : environ 30 à 35 octets SPI (état du FIFO, en-tête + horodatage + 8 octets de données, incrément du FIFO), soit environ 1,3 Mbit/s par port à pleine charge.
+- Un bus SPI à 17 MHz (fréquence maximale conseillée pour le MCP2518FD avec horloge 40 MHz) partagé par 4 contrôleurs est occupé à environ 50 % dans ce pire cas : un bus SPI par carte suffit pour la v1.
+- En CAN FD (trames de 64 octets, phase de données à 2 Mbit/s), le même bus approcherait sa limite si les 4 ports sont saturés en même temps ; un troisième bus SPI reste disponible pour répartir la charge si besoin.
+
+### Options d'architecture
+
+| | Option A : FDCAN intégrés + MCP2518FD en complément | Option B : 8 × MCP2518FD en SPI (recommandé) |
+|---|---|---|
+| Principe | MCU avec le plus de FDCAN possible (3 au maximum avec USB HS : STM32H723/H725/H733/H735), 5 MCP2518FD pour le reste | Le MCU ne fait que l'USB et le SPI ; les 8 ports sont des MCP2518FD identiques |
+| MCU possibles | Pratiquement imposé : STM32H723 + PHY USB HS externe en ULPI (USB3320), ou SAMV71 (2 MCAN, PHY intégré) + 6 MCP2518FD | Tout MCU avec USB HS et 2 à 3 bus SPI avec DMA : STM32U5A5 (PHY intégré), STM32H723 + ULPI, SAMV71 |
+| Firmware | Deux pilotes CAN (FDCAN et MCP2518FD), deux comportements à tester (FIFO, compteurs d'erreurs, horodatage, contraintes de bit timing) | Un seul pilote pour les 8 voies |
+| Cartes | Carte mère : 3 ports FDCAN + 1 port SPI ; carte fille : 4 ports SPI. Les deux cartes « ports » sont différentes | Les ports 1 à 4 et 5 à 8 sont identiques : la variante « une carte 4 ports utilisée deux fois » de D3 devient possible |
+| Coût contrôleurs + MCU (ordre de grandeur, petites quantités) | ≈ 28 à 32 € (H723 + USB3320 + 5 MCP2518FD avec quartz) | ≈ 40 à 45 € (U5A5 + 8 MCP2518FD avec quartz) |
+| Latence | Plus faible sur les 3 ports natifs | Quelques dizaines de µs de plus (interruption puis lecture SPI), sans effet à 500 kbit/s |
+| Consommation | Référence | ≈ +0,1 à 0,3 W (3 contrôleurs de plus) |
+
+Le surcoût de l'option B (≈ 10 à 15 €) reste faible devant le reste de la nomenclature, en particulier les 8 barrières isolées de D2 (≈ 40 à 60 €).
+
+### Choix du MCU (pour l'option B)
+
+| Critère | STM32U5A5VJT6Q (recommandé) | STM32H723VGT6 + USB3320 | ATSAMV71Q21 |
+|---|---|---|---|
+| Cœur | Cortex-M33, 160 MHz | Cortex-M7, 550 MHz | Cortex-M7, 300 MHz |
+| Mémoire | 4 Mo Flash, ≈ 2,5 Mo RAM | 1 Mo Flash, 564 Ko RAM | 2 Mo Flash, 384 Ko RAM |
+| USB High Speed | PHY intégré : seulement D+/D- à router | PHY externe en ULPI : 12 signaux à 60 MHz, routage délicat, un composant de plus | PHY intégré |
+| SPI | 3 SPI | 6 SPI | 2 SPI + USART en mode SPI |
+| Boîtier | LQFP100 | LQFP100 + QFN32 (PHY) | LQFP144 |
+| Prix unitaire indicatif | ≈ 15 à 20 € (ST eStore ≈ 20 USD à l'unité) | ≈ 10 à 12 € + ≈ 2 € de PHY | ≈ 12 à 15 € |
+| Outils | STM32CubeIDE/CubeMX, carte NUCLEO-U5A5ZJ-Q avec ST-LINK V3 ; TinyUSB gère l'USB HS du U5A5 | Mêmes outils ST, nombreux exemples | MPLAB X / Harmony, communauté plus réduite |
+| Disponibilité | Actif, engagement de longévité ST jusqu'en 2036 | Actif | Actif, version automobile disponible |
+
+Autres MCU écartés :
+- STM32G4, STM32H5, STM32G0 : USB Full Speed seulement (incompatible avec D1).
+- STM32H7R3/H7S3 : USB HS à PHY intégré mais seulement 64 Ko de Flash interne, Flash externe à prévoir.
+- NXP i.MX RT1062 : USB HS intégré, mais Flash externe obligatoire et un seul de ses 3 contrôleurs CAN est compatible FD.
+
+Pourquoi le STM32U5A5 :
+- C'est la solution la plus simple à router : un seul boîtier LQFP100 soudable à la main, USB HS sans PHY externe.
+- La puissance suffit : 36 000 trames/s à environ 1 000 à 1 500 cycles par trame (interruption, DMA SPI, mise en forme gs_usb) occupent environ 25 à 35 % du CPU à 160 MHz dans le pire cas. Estimation à confirmer sur la carte Nucleo.
+- La RAM (≈ 2,5 Mo) permet de grands tampons par voie pour absorber les rafales.
+- Repli possible : si la mesure sur Nucleo montre un CPU trop juste, le STM32H723 + USB3320 garde la même architecture B et le même pilote MCP2518FD.
+
+### Conséquences si l'option B + STM32U5A5 est validée
+
+- Carte mère : STM32U5A5VJT6Q, quartz HSE à une fréquence acceptée par le PHY USB HS (ex. 16 MHz, à vérifier dans le manuel de référence), connecteur USB, ports 1 à 4 sur SPI1.
+- Carte fille : ports 5 à 8 sur SPI2. Le connecteur carte à carte transporte SCK, MOSI, MISO, 4 chip-selects, 4 interruptions, 3,3 V, l'alimentation des DC/DC et plusieurs masses.
+- SPI3 reste libre, à réserver pour répartir la charge en CAN FD.
+- Horloge des MCP2518FD : 40 MHz, un quartz par contrôleur (le plus simple) ou un oscillateur partagé par carte, à trancher au schéma.
+- Firmware : pile USB TinyUSB, protocole gs_usb repris de candleLight_fw, pilote MCP2518FD inspiré du pilote Linux `mcp251xfd` (lectures avec CRC et contournements des errata Microchip).
+- Prototype avant le PCB : NUCLEO-U5A5ZJ-Q + 2 cartes d'évaluation MCP2518FD pour valider l'USB HS, le pilote et la charge CPU.
+
+---
+
 ## Synthèse au 2026-11-20
 
 | Question | Décision |
@@ -180,5 +247,6 @@ Conséquences :
 | D3. Connecteurs | 8 DB9 CiA 303-1 en façade, deux rangées de 4, sur deux cartes empilées. |
 | D4. Alimentation | Externe 9 à 36 V uniquement, USB pour les données. |
 | D5. Logiciel PC | gs_usb, 8 voies dans un seul périphérique (SocketCAN `can0` à `can7`). |
+| D6. Contrôleurs et MCU | Proposé : 8 × MCP2518FD en SPI, MCU STM32U5A5 (USB HS à PHY intégré). En attente de validation. |
 
-Prochaine étape : choisir entre les options A (FDCAN intégrés + contrôleurs SPI) et B (8 × MCP2518FD) d'`architecture-options.md`, puis le MCU et la répartition des composants entre carte mère et carte fille.
+Prochaine étape : valider D6, puis prototyper sur NUCLEO-U5A5ZJ-Q avec des cartes d'évaluation MCP2518FD et commencer le schéma KiCad de la carte mère.
