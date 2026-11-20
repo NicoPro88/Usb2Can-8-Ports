@@ -69,7 +69,7 @@ Conséquences :
 
 ## D3. Connecteurs
 
-**Statut : en discussion** (recommandation : DB9 au brochage CiA 303-1, ou borniers pour un câblage à demeure)
+**Statut : décidé le 2026-11-20** : 8 DB9 mâles au brochage CiA 303-1 en façade, sur deux rangées de 4, réalisées avec deux cartes empilées.
 
 ### Options
 
@@ -85,9 +85,25 @@ Conséquences :
 - Avec l'isolation par port (D2), chaque connecteur porte sa propre masse isolée : le connecteur doit garder les distances d'isolement entre ports (DB9 et borniers séparés le font naturellement).
 - La terminaison 120 Ω commutable reste sur la carte, quel que soit le connecteur.
 
-### Recommandation
+### Décision
 
-Option **a** si la carte doit fonctionner avec les câbles et outils CAN du commerce ; option **b** si elle est destinée à être câblée à demeure dans un banc ou une armoire.
+Option **a** retenue : 8 connecteurs DB9 mâles au brochage CiA 303-1 (2 = CAN_L, 7 = CAN_H, 3 = GND_ISO), tous sur la façade, en **deux rangées de 4 ports l'une au-dessus de l'autre**.
+
+Réalisation mécanique : **deux cartes empilées** (carte mère + carte fille enfichée), chacune portant une rangée de 4 DB9 simples.
+
+| | Deux cartes empilées (retenu) | Une carte avec 4 DB9 doubles superposés |
+|---|---|---|
+| Connecteurs | DB9 simples, courants et bon marché | DB9 doubles, moins de choix, plus chers |
+| Isolation entre ports | Chaque DB9 est séparé : distances d'isolement faciles à tenir | Les deux ports d'un bloc partagent le même boîtier métallique : isolement entre ports à vérifier |
+| Surface PCB | Deux fois plus de place pour les 8 barrières isolées (ISO1042 + DC/DC) | Tout sur une seule carte, plus dense |
+| Liaison | Connecteur carte à carte à prévoir | Aucun |
+
+Conséquences :
+- Largeur de façade : environ 4 × 33 mm ≈ 135 mm par rangée.
+- Découpage proposé : carte mère = MCU, USB, alimentation 9 à 36 V, ports 1 à 4 ; carte fille = ports 5 à 8 (contrôleurs MCP2518FD, ISO1042, DC/DC, terminaisons).
+- Connecteur carte à carte (ex. barrette 2,54 mm ou connecteur mezzanine) qui transporte au minimum : 1 ou 2 bus SPI, 4 chip-selects, 4 interruptions, horloge éventuelle des contrôleurs, alimentation 3,3 V et 5 V, plusieurs masses. Liaison courte pour garder un SPI rapide.
+- Le blindage des DB9 se relie au châssis, pas aux masses isolées des ports.
+- Une variante à étudier plus tard : faire de la partie « 4 ports » une carte identique utilisée deux fois, la carte mère ne portant que le MCU, l'USB et l'alimentation.
 
 ---
 
