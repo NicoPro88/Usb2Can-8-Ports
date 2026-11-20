@@ -19,4 +19,4 @@ Carte électronique offrant **8 ports CAN** (jusqu'à **500 kbit/s** chacun) rel
 
 ## État
 
-Phase de cadrage. Aucun choix d'architecture n'est figé : voir [`docs/architecture-options.md`](docs/architecture-options.md).
+Phase de cadrage. Aucun choix d'architecture n'est figé : voir [`docs/architecture-options.md`](docs/architecture-options.md) pour les pistes et [`docs/decisions.md`](docs/decisions.md) pour le suivi des décisions.
