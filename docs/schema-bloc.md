@@ -150,13 +150,13 @@ Total des composants clés : ≈ 130 € par carte complète, hors passifs et ci
 - **DC/DC isolé UCC12050** : isolation renforcée 5 kVrms comme l'ISO1042, CMS, broche EN (permet plus tard de couper un port). Alternative moins chère : module 1 W type B0505S (≈ 1,5 à 3 €, 1 à 1,5 kV, plus encombrant).
 - **USB3320 en 3,3 V externe** : VBAT et VDD33 reliés au 3,3 V comme le prévoit la datasheet ; VDD18 est une entrée, d'où un LDO 1,8 V dédié.
 - **Alimentation 5 V par un abaisseur non synchrone 60 V** (TPS54360 + diode B560C) : marge sur les surtensions 24 V, protégée par la TVS SMBJ36CA.
+- **Terminaison 120 ohms par micro-interrupteur, un par port** (décidé par Nicolas le 2026-11-20, plutôt qu'une commande par logiciel) : à placer au bord de la carte, près du DB9, pour rester accessible.
 - **LED par port pilotées par le MCP2518FD** (GPIO0 = activité, GPIO1 = erreur) : aucun fil supplémentaire sur le connecteur carte à carte.
 
 ## 7. Choix ouverts
 
 | Sujet | Options | Recommandation |
 |---|---|---|
-| Terminaison 120 ohms | a. micro-interrupteur par port (dessiné) ; b. commandée par logiciel (relais statique PhotoMOS piloté par le GPIO1 du MCP2518FD, la LED rouge devient un clignotement de la verte) | b, si la carte est dans un boîtier fermé : un banc de test automatisé doit pouvoir régler la terminaison selon la pièce testée sans ouvrir le boîtier |
 | DC/DC isolé | UCC12050 (dessiné, ≈ 6 €) ou module 1 W (≈ 2 €) | UCC12050, cohérent avec la priorité à la robustesse |
 | Connecteur d'alimentation | bornier débrochable (dessiné) ou jack 2,1 mm | bornier : verrouillé, adapté au 24 V véhicule |
 | Fixation des DB9 | DB9 coudés sur le bord de chaque carte, cartes empilées à ≈ 11 mm | à confirmer avec le boîtier choisi |
