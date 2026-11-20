@@ -1,6 +1,6 @@
 # Pistes d'architecture (à valider)
 
-Rien n'est décidé. Ce document liste les options pour en discuter.
+Ce document liste les options étudiées. Les décisions prises sont dans [`decisions.md`](decisions.md).
 
 ## Contraintes de départ
 

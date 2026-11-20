@@ -144,7 +144,7 @@ Conséquences :
 
 ## D5. Logiciel côté PC
 
-**Statut : en discussion** (recommandation : protocole gs_usb, 8 voies dans un seul périphérique)
+**Statut : décidé le 2026-11-20** : option a, protocole gs_usb, 8 voies dans un seul périphérique USB.
 
 ### Options
 
@@ -160,6 +160,25 @@ Conséquences :
 - Le pilote ne reconnaît que des couples VID:PID listés dans son code. Pour un nouveau matériel, il faut soit obtenir un VID:PID (ex. pid.codes, gratuit pour le matériel open source) et le faire ajouter au pilote, soit le déclarer à la main via `new_id` en attendant.
 - gs_usb envoie une trame par transfert USB : avec l'USB High Speed (D1), le débit de 8 voies à 500 kbit/s est largement couvert.
 
-### Recommandation
+### Décision
 
-Option **a** : gs_usb avec les 8 voies dans un seul périphérique. C'est la piste la plus courte vers un usage réel sous Linux (SocketCAN, can-utils, Wireshark) et elle reste utilisable sous Windows via python-can.
+Option **a** retenue : gs_usb, avec les 8 voies dans un seul périphérique USB High Speed. C'est la piste la plus courte vers un usage réel sous Linux (SocketCAN, can-utils, Wireshark) et elle reste utilisable sous Windows via python-can.
+
+Conséquences :
+- Un seul MCU avec USB High Speed pilote les 8 voies (ce qui écarte l'option C d'`architecture-options.md`, plusieurs MCU derrière un hub).
+- Obtenir un VID:PID (pid.codes) et le faire ajouter à la table du pilote `gs_usb` ; en attendant, déclaration manuelle via `new_id`.
+- Firmware : partir du protocole candleLight (structures `gs_host_frame`), avec l'extension CAN FD prête pour la phase 2 de D1.
+
+---
+
+## Synthèse au 2026-11-20
+
+| Question | Décision |
+|---|---|
+| D1. CAN FD | Matériel compatible FD, firmware CAN 2.0B à 500 kbit/s en v1, FD ensuite. USB High Speed. |
+| D2. Isolation | Isolation par port : ISO1042 + DC/DC isolé 5 V par port. |
+| D3. Connecteurs | 8 DB9 CiA 303-1 en façade, deux rangées de 4, sur deux cartes empilées. |
+| D4. Alimentation | Externe 9 à 36 V uniquement, USB pour les données. |
+| D5. Logiciel PC | gs_usb, 8 voies dans un seul périphérique (SocketCAN `can0` à `can7`). |
+
+Prochaine étape : choisir entre les options A (FDCAN intégrés + contrôleurs SPI) et B (8 × MCP2518FD) d'`architecture-options.md`, puis le MCU et la répartition des composants entre carte mère et carte fille.
