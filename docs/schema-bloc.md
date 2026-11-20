@@ -1,6 +1,6 @@
-# Schéma-bloc, affectation des broches et nomenclature (v0.1)
+# Schéma-bloc, affectation des broches et nomenclature (v0.2)
 
-Ce document accompagne le premier jet du schéma KiCad (`hardware/can8-mere/` et `hardware/can8-fille/`).
+Ce document accompagne le schéma KiCad (v0.2, après vérifications) (`hardware/can8-mere/` et `hardware/can8-fille/`).
 Il applique les décisions D1 à D6 de [`decisions.md`](decisions.md). Les prix sont des ordres de grandeur unitaires en petites quantités, à vérifier au moment de commander.
 
 ## 1. Schéma-bloc
@@ -134,11 +134,12 @@ La nomenclature complète, générée depuis le schéma, est dans `hardware/can8
 | Protection ESD bus CAN | NUP2105L | SOT-23 | 8 | ≈ 0,3 € | ≈ 2 € |
 | Connecteur bus | DB9 mâle coudé avec fixations | traversant | 8 | ≈ 1,5 € | ≈ 12 € |
 | Abaisseur 9-36 V -> 5 V | TPS54360DDA | SO-8 PowerPAD | 1 | ≈ 3 € | ≈ 3 € |
+| Protection d'entrée | PTC Littelfuse 2920L110/60MR, TVS SMBJ36CA, diode SS310 | CMS | 1 jeu | ≈ 1,5 € | ≈ 1,5 € |
 | LDO 3,3 V | AP7361C-33E | SOT-223 | 1 | ≈ 0,5 € | ≈ 0,5 € |
 | LDO 1,8 V (PHY) | AP2112K-1.8 | SOT-23-5 | 1 | ≈ 0,3 € | ≈ 0,3 € |
 | Protection USB | USBLC6-2SC6 | SOT-23-6 | 1 | ≈ 0,4 € | ≈ 0,4 € |
 | Connecteur USB | USB-B coudé blindé | traversant | 1 | ≈ 1 € | ≈ 1 € |
-| Entrée alimentation | bornier débrochable 2 points 5,08 mm (embase + fiche) | traversant | 1 | ≈ 2 € | ≈ 2 € |
+| Entrée alimentation | Phoenix MSTB 2,5/2-GF-5,08 + fiche MSTB 2,5/2-STF-5,08 | traversant | 1 | ≈ 3 € | ≈ 3 € |
 | Liaison carte à carte | barrette 2 × 20 + embase 2 × 20 | traversant | 1 paire | ≈ 2 € | ≈ 2 € |
 
 Total des composants clés : ≈ 130 € par carte complète, hors passifs et circuits imprimés. Le poste principal est l'isolation (ISO1042 + UCC12050 ≈ 76 €), un peu au-dessus de l'estimation de D2 (40 à 60 €), parce que le UCC12050 a été préféré à un module DC/DC bon marché (voir les choix ouverts).
@@ -158,15 +159,26 @@ Total des composants clés : ≈ 130 € par carte complète, hors passifs et ci
 | Sujet | Options | Recommandation |
 |---|---|---|
 | DC/DC isolé | UCC12050 (dessiné, ≈ 6 €) ou module 1 W (≈ 2 €) | UCC12050, cohérent avec la priorité à la robustesse |
-| Connecteur d'alimentation | bornier débrochable (dessiné) ou jack 2,1 mm | bornier : verrouillé, adapté au 24 V véhicule |
 | Fixation des DB9 | DB9 coudés sur le bord de chaque carte, cartes empilées à ≈ 11 mm | à confirmer avec le boîtier choisi |
 
-## 8. Points à vérifier avant le routage
+## 8. Vérifications faites (v0.2)
 
-1. **USB3320, code REFSEL[2:0] pour 24 MHz** (Table 5-10 de la datasheet, introuvable dans les copies consultées) : le schéma prévoit un pont haut et un pont bas par broche, seuls les ponts bas sont montés pour l'instant.
-2. **USB3320, condensateurs de charge du quartz 24 MHz** : CL 20 pF typique (Table 4.11), 2 × 27 pF à recalculer selon le quartz retenu.
-3. **TPS54360** : compensation, seuil UVLO, inductance et fréquence à valider avec TI WEBENCH (valeurs indicatives sur le schéma).
-4. **UCC12050** : la broche 16 est notée GNDS d'après la table des broches ; à confirmer sur le dessin du boîtier.
-5. **PTC d'entrée** : choisir une référence ≥ 1,1 A de maintien et ≥ 60 V.
-6. **Empreinte DB9** : à choisir avec la mécanique (hauteur, fixation, position par rapport au bord).
-7. **ERC** : les schémas ont été vérifiés avec une comparaison de netlist (`hardware/outils/verifier_netlist.py`). Lancer l'ERC de KiCad 8 ou 9 à la première ouverture.
+| Point | Résultat | Source |
+|---|---|---|
+| USB3320, code REFSEL[2:0] | **111** (les trois broches au VDDIO, ici +3V3) pour une référence 24 MHz. Les ponts de réglage sont supprimés. | DS00001792, Table 5-10 |
+| USB3320, résistance VBUS | **10 kohms ± 5 %** pour un périphérique seul (1 kohm est la valeur OTG). Corrigé : le premier jet avait 1 kohm. | DS00001792, Table 5-7 |
+| USB3320, quartz 24 MHz | Fondamental, CL 20 pF, ESR ≤ 30 ohms : charge 2 × 33 pF (3 pF de broche, ≈ 2 pF de circuit imprimé) | DS00001792, Table 4-11 |
+| TPS54360 | 500 kHz (RT 200 kohms), UVLO 8 V / 6,25 V (523 k / 84,5 k), L = 15 µH (Isat ≥ 6 A), compensation 9,09 kohms + 15 nF // 68 pF | [`calculs-alimentation.md`](calculs-alimentation.md) |
+| PTC d'entrée | Littelfuse 2920L110/60MR (60 V, 1,1 A) | [`calculs-alimentation.md`](calculs-alimentation.md) |
+| Bornier d'alimentation | Phoenix MSTB 2,5/2-GF-5,08 (embase à brides filetées : la fiche se visse, elle ne peut pas se débrancher par vibration) | empreinte KiCad `Connector_Phoenix_MSTB` |
+| VCAP du STM32H723 | un 2,2 µF par broche VCAP, sur deux nets séparés (deux sorties d'alimentation ne doivent pas être reliées entre elles) | règles électriques |
+| Quartz HSE 25 MHz | charge 2 × 15 pF pour un quartz CL 10 pF | ST AN2867 |
+| Empreintes | toutes présentes dans les bibliothèques KiCad (contrôle automatique) | `verifier_netlist.py` |
+| Règles électriques | 0 erreur : entrées d'alimentation alimentées, pas deux sorties sur un net, pas d'entrée sans source, pas de net à une broche | `verifier_netlist.py` (l'ERC de KiCad 7 n'est pas disponible en ligne de commande) |
+
+## 9. Reste à vérifier
+
+1. **DB9** : l'empreinte retenue (`DSUB-9_Male_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm`) correspond aux DB9 coudés à fixation par vis, avec les broches à 9,9 mm du bord. La référence exacte est à choisir avec le boîtier.
+2. **UCC12050** : la broche 16 est notée GNDS d'après la table des broches. À confirmer sur le dessin du boîtier.
+3. **ERC de KiCad 8 ou 9** à lancer à la première ouverture, en complément des contrôles automatiques.
+4. **Quartz** : ajuster les condensateurs de charge au CL réel des quartz achetés (24, 25 et 40 MHz).

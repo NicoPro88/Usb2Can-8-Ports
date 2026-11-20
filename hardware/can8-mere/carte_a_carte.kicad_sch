@@ -6,7 +6,7 @@
   (title_block
     (title "Connecteur carte à carte (2 x 20, pas 2,54 mm)")
     (date "2026-11-20")
-    (rev "v0.1 (brouillon)")
+    (rev "v0.2")
     (company "Usb2Can-8-Ports")
     (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (comment 2 "Généré par hardware/outils/generer_schemas.py"))

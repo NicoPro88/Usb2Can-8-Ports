@@ -12,7 +12,7 @@ Deux cartes empilées (décision D3) :
 Chaque projet contient le schéma KiCad (`.kicad_pro`, `.kicad_sch`), un export PDF (`*-schema.pdf`) et la nomenclature (`*-nomenclature.csv`).
 Le schéma-bloc, l'affectation des broches et les points à vérifier sont dans [`docs/schema-bloc.md`](../docs/schema-bloc.md).
 
-## État : v0.1, premier jet
+## État : v0.2 (vérifications faites, avant placement)
 
 Les schémas ont été générés par `outils/generer_schemas.py`, qui décrit chaque carte sous forme de netlist (composant, broche, net) et la dessine en KiCad 7 (lisible par KiCad 8 et 9). `outils/verifier_netlist.py` relit la netlist exportée par `kicad-cli` et la compare à la description : 0 écart sur les deux cartes.
 
