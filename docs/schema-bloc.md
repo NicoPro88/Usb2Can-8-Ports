@@ -49,12 +49,10 @@ Chaque bloc « Port n » est la même feuille KiCad (`port_can.kicad_sch`), util
 flowchart LR
     SPI["SPI + CS + INT<br/>3,3 V, masse GND"] --> MCP["MCP2518FD<br/>quartz 40 MHz"]
     MCP -->|"TXD / RXD"| ISO["ISO1042<br/>barrière 5 kVrms"]
-    MCP -->|"GPIO0"| LED["LED activité"]
-    MCP -->|"GPIO1"| TERM["PhotoMOS<br/>terminaison 120 ohms"]
+    MCP -->|"GPIO0 / GPIO1"| LED["LED activité / erreur"]
     V5["+5 V"] --> DCDC["UCC12050<br/>DC/DC isolé 5 kVrms"]
     DCDC -->|"VISO 5 V / GND_ISO"| ISO
-    ISO -->|"CANH / CANL"| ESD["NUP2105L<br/>protection ESD"]
-    TERM --> ESD
+    ISO -->|"CANH / CANL"| ESD["NUP2105L<br/>+ terminaison 120 ohms commutable"]
     ESD --> DB9["DB9 mâle CiA 303-1"]
 ```
 
@@ -134,7 +132,6 @@ La nomenclature complète, générée depuis le schéma, est dans `hardware/can8
 | Transceiver CAN FD isolé | ISO1042BDWR | SOIC-16 large | 8 | ≈ 3,5 € | ≈ 28 € |
 | DC/DC isolé 500 mW | UCC12050DVER | SOIC-16 large | 8 | ≈ 6 € | ≈ 48 € |
 | Protection ESD bus CAN | NUP2105L | SOT-23 | 8 | ≈ 0,3 € | ≈ 2 € |
-| Commande de terminaison | relais statique PhotoMOS 60 V (référence à choisir) | SOP-4 | 8 | ≈ 1 à 2 € | ≈ 12 € |
 | Connecteur bus | DB9 mâle coudé avec fixations | traversant | 8 | ≈ 1,5 € | ≈ 12 € |
 | Abaisseur 9-36 V -> 5 V | TPS54360DDA | SO-8 PowerPAD | 1 | ≈ 3 € | ≈ 3 € |
 | LDO 3,3 V | AP7361C-33E | SOT-223 | 1 | ≈ 0,5 € | ≈ 0,5 € |
@@ -144,7 +141,7 @@ La nomenclature complète, générée depuis le schéma, est dans `hardware/can8
 | Entrée alimentation | bornier débrochable 2 points 5,08 mm (embase + fiche) | traversant | 1 | ≈ 2 € | ≈ 2 € |
 | Liaison carte à carte | barrette 2 × 20 + embase 2 × 20 | traversant | 1 paire | ≈ 2 € | ≈ 2 € |
 
-Total des composants clés : ≈ 140 € par carte complète, hors passifs et circuits imprimés. Le poste principal est l'isolation (ISO1042 + UCC12050 ≈ 76 €), un peu au-dessus de l'estimation de D2 (40 à 60 €), parce que le UCC12050 a été préféré à un module DC/DC bon marché (voir les choix ouverts).
+Total des composants clés : ≈ 130 € par carte complète, hors passifs et circuits imprimés. Le poste principal est l'isolation (ISO1042 + UCC12050 ≈ 76 €), un peu au-dessus de l'estimation de D2 (40 à 60 €), parce que le UCC12050 a été préféré à un module DC/DC bon marché (voir les choix ouverts).
 
 ## 6. Choix faits dans ce premier jet
 
@@ -153,14 +150,13 @@ Total des composants clés : ≈ 140 € par carte complète, hors passifs et ci
 - **DC/DC isolé UCC12050** : isolation renforcée 5 kVrms comme l'ISO1042, CMS, broche EN (permet plus tard de couper un port). Alternative moins chère : module 1 W type B0505S (≈ 1,5 à 3 €, 1 à 1,5 kV, plus encombrant).
 - **USB3320 en 3,3 V externe** : VBAT et VDD33 reliés au 3,3 V comme le prévoit la datasheet ; VDD18 est une entrée, d'où un LDO 1,8 V dédié.
 - **Alimentation 5 V par un abaisseur non synchrone 60 V** (TPS54360 + diode B560C) : marge sur les surtensions 24 V, protégée par la TVS SMBJ36CA.
-- **LED et terminaison pilotées par le MCP2518FD** : GPIO0 = LED d'activité (les erreurs sont signalées par un clignotement rapide), GPIO1 = relais statique de la terminaison. Aucun fil supplémentaire sur le connecteur carte à carte.
-- **Terminaison 120 ohms commandée par logiciel** (recommandation, en attente de validation) : relais statique PhotoMOS entre CANH et la résistance. Le relais traverse la barrière d'isolement : son isolement (≥ 3,75 kVrms visé) fixe celui du port. Choisir un modèle 60 V à faible résistance passante, sinon ajuster la résistance.
+- **LED par port pilotées par le MCP2518FD** (GPIO0 = activité, GPIO1 = erreur) : aucun fil supplémentaire sur le connecteur carte à carte.
 
 ## 7. Choix ouverts
 
 | Sujet | Options | Recommandation |
 |---|---|---|
-| Terminaison 120 ohms | a. commandée par logiciel (dessiné : PhotoMOS piloté par le GPIO1 du MCP2518FD) ; b. micro-interrupteur par port ; c. les deux en parallèle | a : un banc de test automatisé règle la terminaison selon la pièce testée sans ouvrir le boîtier |
+| Terminaison 120 ohms | a. micro-interrupteur par port (dessiné) ; b. commandée par logiciel (relais statique PhotoMOS piloté par le GPIO1 du MCP2518FD, la LED rouge devient un clignotement de la verte) | b, si la carte est dans un boîtier fermé : un banc de test automatisé doit pouvoir régler la terminaison selon la pièce testée sans ouvrir le boîtier |
 | DC/DC isolé | UCC12050 (dessiné, ≈ 6 €) ou module 1 W (≈ 2 €) | UCC12050, cohérent avec la priorité à la robustesse |
 | Connecteur d'alimentation | bornier débrochable (dessiné) ou jack 2,1 mm | bornier : verrouillé, adapté au 24 V véhicule |
 | Fixation des DB9 | DB9 coudés sur le bord de chaque carte, cartes empilées à ≈ 11 mm | à confirmer avec le boîtier choisi |
@@ -171,7 +167,6 @@ Total des composants clés : ≈ 140 € par carte complète, hors passifs et ci
 2. **USB3320, condensateurs de charge du quartz 24 MHz** : CL 20 pF typique (Table 4.11), 2 × 27 pF à recalculer selon le quartz retenu.
 3. **TPS54360** : compensation, seuil UVLO, inductance et fréquence à valider avec TI WEBENCH (valeurs indicatives sur le schéma).
 4. **UCC12050** : la broche 16 est notée GNDS d'après la table des broches ; à confirmer sur le dessin du boîtier.
-5. **Relais PhotoMOS de terminaison** : choisir la référence (60 V, isolement ≥ 3,75 kVrms, résistance passante faible) et vérifier le courant de commande fourni par le GPIO du MCP2518FD (470 ohms, ≈ 4 mA).
-6. **PTC d'entrée** : choisir une référence ≥ 1,1 A de maintien et ≥ 60 V.
-7. **Empreinte DB9** : à choisir avec la mécanique (hauteur, fixation, position par rapport au bord).
-8. **ERC** : les schémas ont été vérifiés avec une comparaison de netlist (`hardware/outils/verifier_netlist.py`). Lancer l'ERC de KiCad 8 ou 9 à la première ouverture.
+5. **PTC d'entrée** : choisir une référence ≥ 1,1 A de maintien et ≥ 60 V.
+6. **Empreinte DB9** : à choisir avec la mécanique (hauteur, fixation, position par rapport au bord).
+7. **ERC** : les schémas ont été vérifiés avec une comparaison de netlist (`hardware/outils/verifier_netlist.py`). Lancer l'ERC de KiCad 8 ou 9 à la première ouverture.

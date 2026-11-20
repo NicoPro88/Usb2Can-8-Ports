@@ -74,17 +74,15 @@ def feuille_port(project):
                    'ne doit traverser la saignée sous ces deux boîtiers (distance de fuite >= 8 mm).',
                    'DB9 mâle CiA 303-1 : 2 = CAN_L, 7 = CAN_H, 3 et 6 = CAN_GND (GND_ISO), 5 = blindage (châssis),\n'
                    '1, 4, 8, 9 non connectées. Le boîtier métallique du DB9 est relié au châssis.',
-                   'Terminaison 120 ohms commandée par logiciel : GPIO1 du MCP2518FD (registre IOCON) -> relais statique\n'
-                   'PhotoMOS. Le relais traverse la barrière : son isolement (>= 3,75 kVrms visé) limite celui du port.\n'
-                   'Référence à choisir : 60 V mini, faible résistance passante (sinon ajuster la résistance de 120 ohms).\n'
-                   'LED verte = activité (GPIO0) ; les erreurs sont signalées par un clignotement rapide.',
+                   'Terminaison 120 ohms commutable par micro-interrupteur. LED verte = activité (GPIO0),\n'
+                   'LED rouge = erreur (GPIO1), pilotées par le MCP2518FD (registre IOCON).',
                    'Quartz 40 MHz : charge 2 x 15 pF à ajuster selon le quartz retenu (CL et capacité parasite).',
                ])
     sh.pwr_flags = ['GND_ISO']
     # contrôleur CAN
     sh.add('can8:MCP2518FD-xSL', 'U', 'MCP2518FD-E/SL', {
         10: 'SCK', 11: 'MOSI', 12: 'SDO', 13: '~{CS}', 4: '~{INT}', 14: '+3V3', 7: 'GND',
-        6: 'OSC1', 5: 'OSC2', 1: 'TXD', 2: 'RXD', 3: None, 9: 'LED_ACT', 8: 'TERM_CMD'})
+        6: 'OSC1', 5: 'OSC2', 1: 'TXD', 2: 'RXD', 3: None, 9: 'LED_ACT', 8: 'LED_ERR'})
     add(sh, R('33', 'SDO', 'MISO'))
     add(sh, R('10k', '+3V3', '~{CS}'))
     add(sh, R('10k', '+3V3', '~{INT}'))
@@ -96,8 +94,8 @@ def feuille_port(project):
     # LED
     add(sh, R('1k', 'LED_ACT', 'LED_ACT_A'))
     sh.add('Device:LED', 'D', 'verte', {2: 'LED_ACT_A', 1: 'GND'}, footprint=LED0603)
-    # commande de la terminaison (côté logique du relais statique)
-    add(sh, R('470', 'TERM_CMD', 'TERM_LED_A'))
+    add(sh, R('1k', 'LED_ERR', 'LED_ERR_A'))
+    sh.add('Device:LED', 'D', 'rouge', {2: 'LED_ERR_A', 1: 'GND'}, footprint=LED0603)
     # transceiver isolé
     sh.add('can8:ISO1042BDW', 'U', 'ISO1042BDWR', {
         1: '+3V3', 2: 'GND', 8: 'GND', 3: 'TXD', 5: 'RXD', 11: 'VISO', 16: 'VISO', 13: 'CANH',
@@ -114,8 +112,8 @@ def feuille_port(project):
     decoupling(sh, 'VISO', 'GND_ISO', ['100nF', '10uF'])
     # côté bus
     sh.add('Power_Protection:NUP2105L', 'D', 'NUP2105L', {1: 'CANH', 2: 'CANL', 3: 'GND_ISO'})
-    sh.add('Relay_SolidState:CPC1017N', 'K', 'PhotoMOS 60V (à choisir)',
-           {1: 'TERM_LED_A', 2: 'GND', 3: 'CANH', 4: 'TERM'})
+    sh.add('Switch:SW_SPST', 'SW', 'Terminaison', {1: 'CANH', 2: 'TERM'},
+           footprint='Button_Switch_SMD:SW_DIP_SPSTx01_Slide_6.7x4.1mm_W8.61mm_P2.54mm_LowProfile')
     add(sh, R('120 1%', 'TERM', 'CANL', fp=R1206))
     sh.add('Connector:DE9_Plug_MountingHoles', 'J', 'DB9 mâle', {
         2: 'CANL', 7: 'CANH', 3: 'GND_ISO', 6: 'GND_ISO', 5: 'CHASSIS', 1: None, 4: None, 8: None,
