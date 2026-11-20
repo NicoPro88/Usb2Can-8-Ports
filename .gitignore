@@ -1,0 +1,44 @@
+# --- KiCad ---
+*.bak
+*.bck
+*-bak
+*-backups/
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.kicad_prl
+*.kicad_sch.lck
+*.kicad_pcb.lck
+\#auto_saved_files#
+_autosave-*
+fp-info-cache
+*.lck
+*.000
+*.$$$
+*.tmp
+# Sorties de fabrication générées localement (les versions publiées vont dans hardware/fab/)
+hardware/**/gerbers/
+hardware/**/production/
+
+# --- Firmware (C/C++, STM32CubeIDE, PlatformIO, CMake) ---
+build/
+Debug/
+Release/
+*.o
+*.d
+*.su
+*.elf
+*.map
+*.list
+*.hex
+*.bin
+.pio/
+.metadata/
+cmake-build-*/
+compile_commands.json
+
+# --- Éditeurs / OS ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
