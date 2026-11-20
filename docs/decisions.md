@@ -9,7 +9,7 @@ Les prix sont des ordres de grandeur unitaires (petites quantités, distributeur
 
 ## D1. CAN 2.0 seul ou CAN FD ?
 
-**Statut : en discussion** (recommandation : matériel compatible CAN FD, firmware CAN 2.0 d'abord)
+**Statut : décidé le 2026-11-20** : option b, matériel compatible CAN FD, firmware CAN 2.0B d'abord.
 
 ### Options
 
@@ -26,9 +26,14 @@ Les prix sont des ordres de grandeur unitaires (petites quantités, distributeur
 - Si FD est activé : 8 ports × jusqu'à 2 à 5 Mbit/s en phase de données dépassent l'USB Full Speed (12 Mbit/s). **USB High Speed devient obligatoire.**
 - Côté PC, SocketCAN et gs_usb gèrent CAN FD (gs_usb depuis Linux 6.x), donc le choix b reste compatible avec la piste gs_usb.
 
-### Recommandation
+### Décision
 
-Option **b** : tout le matériel (contrôleurs, transceivers, isolation éventuelle, USB High Speed) est choisi compatible CAN FD ; la v1 du firmware ne fait que du CAN 2.0B à 500 kbit/s, FD vient dans une version suivante.
+Option **b** retenue : tout le matériel (contrôleurs, transceivers, isolation éventuelle, USB High Speed) est choisi compatible CAN FD ; la v1 du firmware ne fait que du CAN 2.0B à 500 kbit/s, le FD vient dans une version suivante.
+
+Conséquences :
+- Contrôleurs CAN : FDCAN intégré ou MCP2518FD (MCP2515 exclu).
+- Transceivers : modèles compatibles FD (TCAN1042, MCP2562FD, TJA1462 ou ISO1042 si isolation).
+- Liaison hôte : USB 2.0 High Speed (480 Mbit/s), donc MCU avec USB HS intégré ou PHY ULPI externe.
 
 ---
 
