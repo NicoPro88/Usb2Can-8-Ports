@@ -93,7 +93,7 @@ Option **a** si la carte doit fonctionner avec les câbles et outils CAN du comm
 
 ## D4. Alimentation
 
-**Statut : en discussion** (recommandation : entrée externe large plage + USB-C, au choix)
+**Statut : décidé le 2026-11-20** : option c, alimentation externe 9 à 36 V seulement, l'USB ne sert qu'aux données.
 
 ### Budget de puissance estimé
 
@@ -114,12 +114,36 @@ Un port USB 2.0 fournit 2,5 W (500 mA), un port USB 3.x 4,5 W (900 mA) : aucun d
 | c. Alimentation externe seule (ex. 9 à 36 V), USB pour les données | Jack ou bornier + régulateur abaisseur + protections (inversion, surtension) | ≈ 3 à 5 € | Indépendant du PC, compatible 12/24 V véhicule et industriel. Un bloc secteur ou un câble d'alimentation en plus. |
 | d. Les deux : entrée externe 9 à 36 V **ou** USB-C | c + b + sélection automatique (diode idéale, ex. LM66100) | ≈ 4 à 7 € | Un seul câble USB-C sur un port capable, alimentation externe sinon. Le firmware peut lire le courant annoncé et signaler une alimentation insuffisante. |
 
-### Recommandation
+### Décision
 
-Option **d** : USB-C pour la simplicité sur un PC récent, entrée externe 9 à 36 V pour tous les autres cas (PC ancien, véhicule, armoire 24 V).
+Option **c** retenue : la carte est alimentée uniquement par une entrée externe 9 à 36 V ; l'USB ne transporte que les données.
+
+Conséquences :
+- La carte est un périphérique USB auto-alimenté (self-powered) : le MCU doit surveiller VBUS (pont diviseur) pour ne connecter le pull-up D+ que lorsque le câble USB est branché. Sans alimentation externe, la carte n'apparaît pas sur le PC.
+- Étage d'entrée : protection contre l'inversion de polarité, TVS contre les surtensions (12/24 V véhicule), fusible réarmable, puis régulateur abaisseur vers 5 V ou 3,3 V.
+- Budget à dimensionner pour ~6,5 W en sortie, soit ~8 W en entrée en tenant compte du rendement.
+- Connecteur d'alimentation (jack ou bornier débrochable) à choisir avec D3.
 
 ---
 
 ## D5. Logiciel côté PC
 
-**Statut : à traiter**
+**Statut : en discussion** (recommandation : protocole gs_usb, 8 voies dans un seul périphérique)
+
+### Options
+
+| Option | Principe | Côté Linux | Côté Windows | Conséquences |
+|---|---|---|---|---|
+| a. gs_usb (protocole candleLight) | Un périphérique USB qui expose 8 voies CAN | Pilote `gs_usb` du noyau : apparaît directement en `can0` à `can7` (SocketCAN), CAN FD géré | Accès via libusb/WinUSB : python-can (interface `gs_usb`), Cangaroo | Aucun pilote PC à écrire sous Linux. Le protocole impose sa structure de trames ; le firmware doit le respecter. |
+| b. slcan (protocole ASCII sur port série virtuel) | 8 ports série USB CDC-ACM, un par voie | `slcand` crée les interfaces SocketCAN | Ports COM natifs, nombreux outils | Simple à déboguer. Texte ASCII peu efficace, pas de CAN FD standardisé, 8 ports série à gérer. |
+| c. Protocole propre | Format binaire libre | Pilote ou démon à écrire | Pilote ou bibliothèque à écrire | Liberté totale (horodatage, statistiques), mais tout le logiciel PC est à développer et maintenir. |
+
+### Points à retenir
+
+- Le pilote `gs_usb` actuel du noyau Linux accepte jusqu'à 255 voies par périphérique ; les noyaux anciens étaient limités à 3 voies. La version minimale du noyau à supporter est à vérifier.
+- Le pilote ne reconnaît que des couples VID:PID listés dans son code. Pour un nouveau matériel, il faut soit obtenir un VID:PID (ex. pid.codes, gratuit pour le matériel open source) et le faire ajouter au pilote, soit le déclarer à la main via `new_id` en attendant.
+- gs_usb envoie une trame par transfert USB : avec l'USB High Speed (D1), le débit de 8 voies à 500 kbit/s est largement couvert.
+
+### Recommandation
+
+Option **a** : gs_usb avec les 8 voies dans un seul périphérique. C'est la piste la plus courte vers un usage réel sous Linux (SocketCAN, can-utils, Wireshark) et elle reste utilisable sous Windows via python-can.
