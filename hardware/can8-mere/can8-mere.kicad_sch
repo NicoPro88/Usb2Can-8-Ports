@@ -1,0 +1,831 @@
+(kicad_sch
+  (version 20230121)
+  (generator eeschema)
+  (uuid ff9fe24f-d772-57d9-b77c-30b8b96de531)
+  (paper "A4")
+  (title_block
+    (title "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
+    (date "2026-11-20")
+    (rev "v0.1 (brouillon)")
+    (company "Usb2Can-8-Ports")
+    (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
+    (comment 2 "Généré par hardware/outils/generer_schemas.py"))
+  (lib_symbols)
+  (sheet
+    (at 50.8 40.64)
+    (size 63.5 12.7)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid f2d36338-5012-5e82-baaf-6923e7402118)
+    (property "Sheetname" "Alimentation 9-36 V -> 5 V -> 3,3 V"
+      (at 50.8 39.94 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "alimentation.kicad_sch"
+      (at 50.8 53.94 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "2")))))
+  (sheet
+    (at 50.8 63.5)
+    (size 63.5 12.7)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid 9dba8e46-89a9-5538-9618-b549839cc5a0)
+    (property "Sheetname" "Microcontrôleur STM32H723ZGT6"
+      (at 50.8 62.8 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "mcu.kicad_sch"
+      (at 50.8 76.8 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "3")))))
+  (sheet
+    (at 50.8 86.36)
+    (size 63.5 12.7)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid dd362c73-ed10-550e-aefb-a8b7a56c03a1)
+    (property "Sheetname" "USB 2.0 High Speed "
+      (at 50.8 85.66 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "usb.kicad_sch"
+      (at 50.8 99.66 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "4")))))
+  (sheet
+    (at 50.8 109.22)
+    (size 63.5 12.7)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid b7d33b73-43e7-5b2c-baff-18c638f465e1)
+    (property "Sheetname" "Connecteur carte à carte (2 x 20, pas 2,"
+      (at 50.8 108.52 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "carte_a_carte.kicad_sch"
+      (at 50.8 122.52 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "5")))))
+  (sheet
+    (at 203.2 40.64)
+    (size 50.8 15.24)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid ca61e693-894a-5eae-8660-7b885a6c95b3)
+    (property "Sheetname" "Port CAN 1"
+      (at 203.2 39.94 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "port_can.kicad_sch"
+      (at 203.2 56.48 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (pin "SCK" input
+      (at 203.2 43.18 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 91239656-8f33-5c7c-87b3-be99a43d124c))
+    (pin "MOSI" input
+      (at 203.2 45.72 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid aabf0a58-4a95-525d-94bf-40650e55f171))
+    (pin "MISO" output
+      (at 203.2 48.26 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 98fdfb6c-a3af-5b26-add8-236e2a892a43))
+    (pin "~{CS}" input
+      (at 203.2 50.8 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 5e04b3fe-fee7-5c70-8ce4-0cf8aafa057a))
+    (pin "~{INT}" output
+      (at 203.2 53.34 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid ee10fc19-2a01-5076-b863-a9eb4f769fa5))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "6")))))
+  (wire
+    (pts
+      (xy 203.2 43.18)
+      (xy 198.12 43.18))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid dae6be66-2f30-57b0-be3b-a482fe446a81))
+  (global_label "SPI1_SCK"
+    (shape passive)
+    (at 198.12 43.18 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 0327696b-31bf-5043-974c-8a2ba8fe9d1b)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 45.72)
+      (xy 198.12 45.72))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid fa1e4db8-b543-5802-9c8f-283be18fcc88))
+  (global_label "SPI1_MOSI"
+    (shape passive)
+    (at 198.12 45.72 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid aab52038-3453-5d95-a716-ae7393860546)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 48.26)
+      (xy 198.12 48.26))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid f3b5d8a8-2b01-550c-94ae-6be6989e38e9))
+  (global_label "SPI1_MISO"
+    (shape passive)
+    (at 198.12 48.26 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 944b0b03-9aa1-567a-a5ce-0b4e2fe95cda)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 50.8)
+      (xy 198.12 50.8))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid ca6ccebe-267e-5664-8e0d-739dce5fd10c))
+  (global_label "~{CS1}"
+    (shape passive)
+    (at 198.12 50.8 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 1d7d3820-656c-57f6-a975-17f45c077f6e)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 53.34)
+      (xy 198.12 53.34))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 44fab918-661e-509e-a423-136a1d99df47))
+  (global_label "~{INT1}"
+    (shape passive)
+    (at 198.12 53.34 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 31129dcb-d3ea-5f24-a543-0562da1c979d)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (sheet
+    (at 203.2 71.12)
+    (size 50.8 15.24)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid 21ff80b4-81e8-5347-8a0f-b0262f35358d)
+    (property "Sheetname" "Port CAN 2"
+      (at 203.2 70.42 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "port_can.kicad_sch"
+      (at 203.2 86.96 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (pin "SCK" input
+      (at 203.2 73.66 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 3182c54b-74c1-5c0c-8e29-805316b6afcc))
+    (pin "MOSI" input
+      (at 203.2 76.2 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 7c203101-4979-5166-b9ea-85120326a5e8))
+    (pin "MISO" output
+      (at 203.2 78.74 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 6ad1e5d1-23dd-55d8-ae80-52c49b49acb0))
+    (pin "~{CS}" input
+      (at 203.2 81.28 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid b5104dcd-33c3-552c-92d3-48fb85a21fd2))
+    (pin "~{INT}" output
+      (at 203.2 83.82 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid bb814daf-d521-5d76-97e9-f3d42438ae71))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "7")))))
+  (wire
+    (pts
+      (xy 203.2 73.66)
+      (xy 198.12 73.66))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 22961e57-e54d-5c26-8a66-6429bfd2748d))
+  (global_label "SPI1_SCK"
+    (shape passive)
+    (at 198.12 73.66 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid f62ec7e9-b7fb-533d-a1ff-5fd23b1b7282)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 76.2)
+      (xy 198.12 76.2))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid b10f7ddb-a282-5111-8cfb-c71554effa77))
+  (global_label "SPI1_MOSI"
+    (shape passive)
+    (at 198.12 76.2 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid f0f69267-a774-58d6-8df9-22b4e4add734)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 78.74)
+      (xy 198.12 78.74))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid f2c8f8da-e757-5ee1-83e6-c824152d49b4))
+  (global_label "SPI1_MISO"
+    (shape passive)
+    (at 198.12 78.74 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 9ba5c5a0-9e21-59c2-a578-308426cc9acb)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 81.28)
+      (xy 198.12 81.28))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 56341946-3318-5093-b21a-aeefbae71181))
+  (global_label "~{CS2}"
+    (shape passive)
+    (at 198.12 81.28 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 80e06b02-d078-5e30-a121-59aeb1f2a360)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 83.82)
+      (xy 198.12 83.82))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid dc29ac03-3861-5248-b496-83d01675a432))
+  (global_label "~{INT2}"
+    (shape passive)
+    (at 198.12 83.82 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 0f1f6816-bf6a-5540-a308-caabaf6a4dd7)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (sheet
+    (at 203.2 101.6)
+    (size 50.8 15.24)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid f511d7a3-5831-5c6c-a006-6fbfd608318c)
+    (property "Sheetname" "Port CAN 3"
+      (at 203.2 100.9 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "port_can.kicad_sch"
+      (at 203.2 117.44 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (pin "SCK" input
+      (at 203.2 104.14 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 58234db3-d461-57be-aeb7-3cad1ac77346))
+    (pin "MOSI" input
+      (at 203.2 106.68 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid dfeff16c-d38c-5848-828e-39f2e4d22f5b))
+    (pin "MISO" output
+      (at 203.2 109.22 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 5f6a9ab3-5225-5e74-b83a-cbcf5fd4b8b4))
+    (pin "~{CS}" input
+      (at 203.2 111.76 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid c78f1aa3-97b5-58ea-a52e-271c166c6ecb))
+    (pin "~{INT}" output
+      (at 203.2 114.3 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid c5a96143-ab6a-5d4c-aa71-273859419701))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "8")))))
+  (wire
+    (pts
+      (xy 203.2 104.14)
+      (xy 198.12 104.14))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid fefac1be-ed7a-55a8-9489-3ff3d4e21afc))
+  (global_label "SPI2_SCK"
+    (shape passive)
+    (at 198.12 104.14 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid f9a9ba81-6791-5d24-896c-aa631979ac64)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 106.68)
+      (xy 198.12 106.68))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 561505e3-6fca-5fec-8105-09487167a059))
+  (global_label "SPI2_MOSI"
+    (shape passive)
+    (at 198.12 106.68 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 041a1cbe-a51a-5d6f-84b8-c016311f8162)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 109.22)
+      (xy 198.12 109.22))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid fd49983c-b5d4-5d1d-8595-fc6dc6a24929))
+  (global_label "SPI2_MISO"
+    (shape passive)
+    (at 198.12 109.22 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid ac26bc3f-52ea-5dc5-a84b-dc09e89b7be4)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 111.76)
+      (xy 198.12 111.76))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid d0c7ad46-13af-5c19-81de-1a140985995f))
+  (global_label "~{CS3}"
+    (shape passive)
+    (at 198.12 111.76 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 2f31bce1-21bd-5ecf-9055-2623f2ab1514)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 114.3)
+      (xy 198.12 114.3))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 9969f5a4-e373-56fc-9e87-8b726d6f9788))
+  (global_label "~{INT3}"
+    (shape passive)
+    (at 198.12 114.3 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 33a33992-bdaa-52f7-8d77-88ae95baa8b2)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (sheet
+    (at 203.2 132.08)
+    (size 50.8 15.24)
+    (fields_autoplaced)
+    (stroke
+      (width 0.1524)
+      (type solid))
+    (fill
+      (color 0 0 0 0))
+    (uuid a76fbf59-a0c3-59ea-a3e8-2525ab40843d)
+    (property "Sheetname" "Port CAN 4"
+      (at 203.2 131.38 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left bottom)))
+    (property "Sheetfile" "port_can.kicad_sch"
+      (at 203.2 147.92 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left top)))
+    (pin "SCK" input
+      (at 203.2 134.62 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid e7fc982e-d967-5f77-8381-ea17c72a0485))
+    (pin "MOSI" input
+      (at 203.2 137.16 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 74ff095f-e6b5-5bc8-aa2d-63bd2403ec10))
+    (pin "MISO" output
+      (at 203.2 139.7 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 4028e448-0fde-5546-ae77-e0824345a0a4))
+    (pin "~{CS}" input
+      (at 203.2 142.24 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid 0b174a5a-e53d-554d-badb-75679f662b49))
+    (pin "~{INT}" output
+      (at 203.2 144.78 180)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left))
+      (uuid e32a348a-8990-51d6-a11a-1895dcc31c65))
+    (instances
+      (project "can8-mere"
+        (path "/ff9fe24f-d772-57d9-b77c-30b8b96de531"
+          (page "9")))))
+  (wire
+    (pts
+      (xy 203.2 134.62)
+      (xy 198.12 134.62))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 83fc8b3d-7a89-5bcd-bb66-c154f2b06bf6))
+  (global_label "SPI2_SCK"
+    (shape passive)
+    (at 198.12 134.62 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 67c9c4a9-078d-5b42-a079-a27db68dd7af)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 137.16)
+      (xy 198.12 137.16))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 8721115d-1007-5a19-8d6a-1e207326c12e))
+  (global_label "SPI2_MOSI"
+    (shape passive)
+    (at 198.12 137.16 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid cf428eda-89f8-55a2-9b38-7f75562b9592)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 139.7)
+      (xy 198.12 139.7))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 986f6577-1ef2-52d6-8050-dc8ebe31ea91))
+  (global_label "SPI2_MISO"
+    (shape passive)
+    (at 198.12 139.7 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 08a82a77-fa4a-5e41-8250-9a8b487320be)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 142.24)
+      (xy 198.12 142.24))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid dd1d1924-b657-5d8c-b126-6d25b4553ebe))
+  (global_label "~{CS4}"
+    (shape passive)
+    (at 198.12 142.24 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid a8e98c52-00dc-59d6-b9aa-d590e2a967e3)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 203.2 144.78)
+      (xy 198.12 144.78))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 93ead61a-7596-5cb2-ba9f-d4b25abaccbc))
+  (global_label "~{INT4}"
+    (shape passive)
+    (at 198.12 144.78 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid ee55755a-24c5-5fe3-a763-f7f576ae759d)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 0 0 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (text "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4\nVoir docs/schema-bloc.md pour le schéma-bloc, l'affectation des broches et la nomenclature."
+    (at 50.8 25.4 0)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left bottom))
+    (uuid 83974340-1581-5d76-8b76-1d5967f7936e))
+  (sheet_instances
+    (path "/"
+      (page "1"))))
