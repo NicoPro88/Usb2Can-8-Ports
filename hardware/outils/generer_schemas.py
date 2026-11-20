@@ -28,7 +28,7 @@ from schema import S, Sheet, uid, font  # noqa: E402
 
 HW = os.path.normpath(os.path.join(HERE, '..'))
 DATE = '2026-11-20'
-REV = 'v0.1 (brouillon)'
+REV = 'v0.2'
 
 # ------------------------------------------------------------------ empreintes
 R0603 = 'Resistor_SMD:R_0603_1608Metric'
@@ -128,15 +128,17 @@ def feuille_alim():
                notes=[
                    'Entrée 9 à 36 V (12/24 V véhicule ou industriel) : PTC, TVS bidirectionnelle 36 V,\n'
                    'diode série anti-inversion, puis abaisseur TPS54360 (60 V, 3,5 A, non synchrone) vers 5 V.',
-                   'À CALCULER (TI WEBENCH / feuille de calcul TPS54360) : fréquence (RT = 196k -> ~500 kHz),\n'
-                   'seuil UVLO (pont EN), compensation (RC/CC/CP), inductance et capacités de sortie. Valeurs indicatives.',
+                   'TPS54360 (calculs : docs/calculs-alimentation.md) : fsw 500 kHz (RT 200k), UVLO 8 V / 6,25 V (523k / 84,5k),\n'
+                   'sortie 5 V (53,6k / 10,2k), L = 15 uH (Isat >= 6 A), 2 x 47 uF, compensation 9,09k + 15 nF // 68 pF (fc ~16 kHz).',
+                   'PTC : Littelfuse 2920L110/60MR (1,1 A maintenu à 23 °C, 60 V). Au pire cas (9 V, 8 bus en court-circuit,\n'
+                   'boîtier chaud) le courant d\'entrée approche le seuil : déclenchement possible, sans dommage (réarmable).',
                    'Budget : ~6,5 W au pire (D4). 5 V : 8 x UCC12050 + LDO 3,3 V. 3,3 V : MCU, PHY, 8 x MCP2518FD.',
                    'Châssis : trous de fixation et blindages (USB, DB9) reliés à GND par 1 Mohm // 4,7 nF 2 kV.',
                ])
     sh.pwr_flags = ['GND', '+VIN', '+5V']
-    sh.add('Connector:Screw_Terminal_01x02', 'J', 'Alim 9-36V', {1: 'VIN_BRUT', 2: 'GND'},
-           footprint='TerminalBlock_Phoenix:TerminalBlock_Phoenix_MSTBA-2,5-2-G-5,08_1x02_P5.08mm_Horizontal')
-    sh.add('Device:Polyfuse', 'F', 'PTC 1,1A 60V', {1: 'VIN_BRUT', 2: 'VIN_FUS'},
+    sh.add('Connector:Screw_Terminal_01x02', 'J', 'MSTB 2,5/2-GF-5,08', {1: 'VIN_BRUT', 2: 'GND'},
+           footprint='Connector_Phoenix_MSTB:PhoenixContact_MSTB_2,5_2-GF-5,08_1x02_P5.08mm_Horizontal_ThreadedFlange')
+    sh.add('Device:Polyfuse', 'F', '2920L110/60MR', {1: 'VIN_BRUT', 2: 'VIN_FUS'},
            footprint='Fuse:Fuse_2920_7451Metric')
     sh.add('Device:D_TVS', 'D', 'SMBJ36CA', {1: 'VIN_FUS', 2: 'GND'}, footprint='Diode_SMD:D_SMB')
     sh.add('Device:D_Schottky', 'D', 'SS310 (100V 3A)', {2: 'VIN_FUS', 1: '+VIN'}, footprint='Diode_SMD:D_SMA')
@@ -147,17 +149,17 @@ def feuille_alim():
     # abaisseur 5 V
     sh.add('Regulator_Switching:TPS54360DDA', 'U', 'TPS54360DDA', {
         2: '+VIN', 3: 'EN', 4: 'RT', 1: 'BOOT', 8: 'SW', 5: 'FB', 6: 'COMP', 7: 'GND', 9: 'GND'})
-    add(sh, R('442k', '+VIN', 'EN'))
-    add(sh, R('90.9k', 'EN', 'GND'))
-    add(sh, R('196k', 'RT', 'GND'))
+    add(sh, R('523k 1%', '+VIN', 'EN'))
+    add(sh, R('84.5k 1%', 'EN', 'GND'))
+    add(sh, R('200k 1%', 'RT', 'GND'))
     add(sh, C('100nF', 'BOOT', 'SW'))
     sh.add('Device:D_Schottky', 'D', 'B560C (60V 5A)', {1: 'SW', 2: 'GND'}, footprint='Diode_SMD:D_SMC')
-    sh.add('Device:L', 'L', '10uH Isat>=4A', {1: 'SW', 2: '+5V'}, footprint='Inductor_SMD:L_Bourns_SRP1038C_10.0x10.0mm')
+    sh.add('Device:L', 'L', '15uH Isat>=6A', {1: 'SW', 2: '+5V'}, footprint='Inductor_SMD:L_Bourns_SRP1038C_10.0x10.0mm')
     add(sh, R('53.6k 1%', '+5V', 'FB'))
     add(sh, R('10.2k 1%', 'FB', 'GND'))
-    add(sh, R('16.9k', 'COMP', 'COMP_RC'))
-    add(sh, C('4.7nF', 'COMP_RC', 'GND'))
-    add(sh, C('47pF', 'COMP', 'GND'))
+    add(sh, R('9.09k 1%', 'COMP', 'COMP_RC'))
+    add(sh, C('15nF', 'COMP_RC', 'GND'))
+    add(sh, C('68pF', 'COMP', 'GND'))
     decoupling(sh, '+5V', 'GND', ['47uF', '47uF', '100nF'])
     # LDO 3,3 V
     sh.add('Regulator_Linear:AP7361C-33E', 'U', 'AP7361C-33E', {1: '+5V', 2: 'GND', 3: '+3V3'})
@@ -172,7 +174,7 @@ def feuille_alim():
     # châssis
     add(sh, R('1M', 'CHASSIS', 'GND'))
     add(sh, C('4.7nF 2kV', 'CHASSIS', 'GND', C1206))
-    for _ in range(4):
+    for _ in range(6):   # 4 alignés sur ceux de la carte fille + 2 à l'arrière (connecteurs USB et alim)
         sh.add('Mechanical:MountingHole_Pad', 'H', 'M3', {1: 'CHASSIS'},
                footprint='MountingHole:MountingHole_3.2mm_M3_Pad_Via')
     return sh
@@ -224,22 +226,23 @@ def feuille_mcu():
         elif name in ('VDDA', 'VREF+'):
             nets[n] = '+3V3A'
         elif name == 'VCAP':
-            nets[n] = 'VCAP'
+            nets[n] = 'VCAP%d' % (1 + sum(1 for v in nets.values() if v.startswith('VCAP')))
     nets.update(SPI_PINS)
     nets.update(ULPI_PINS)
     nets.update(MISC_PINS)
     sh.add('MCU_ST_STM32H7:STM32H723ZGTx', 'U', 'STM32H723ZGT6', nets, nc_default=True)
     nvdd = sum(1 for v in nets.values() if v == '+3V3')
     decoupling(sh, '+3V3', 'GND', ['100nF'] * nvdd + ['4.7uF'])
-    decoupling(sh, 'VCAP', 'GND', ['2.2uF', '2.2uF'])
+    decoupling(sh, 'VCAP1', 'GND', ['2.2uF'])
+    decoupling(sh, 'VCAP2', 'GND', ['2.2uF'])
     sh.add('Device:FerriteBead', 'FB', '600R@100MHz', {1: '+3V3', 2: '+3V3A'},
            footprint='Inductor_SMD:L_0603_1608Metric')
     decoupling(sh, '+3V3A', 'GND', ['1uF', '100nF'])
     # quartz HSE
     sh.add('Device:Crystal_GND24', 'Y', '25MHz', {1: 'HSE_IN', 3: 'HSE_OUT', 2: 'GND', 4: 'GND'},
            footprint=XTAL3225)
-    add(sh, C('10pF', 'HSE_IN', 'GND'))
-    add(sh, C('10pF', 'HSE_OUT', 'GND'))
+    add(sh, C('15pF', 'HSE_IN', 'GND'))
+    add(sh, C('15pF', 'HSE_OUT', 'GND'))
     # reset, boot
     add(sh, C('100nF', 'NRST', 'GND'))
     sh.add('Switch:SW_Push', 'SW', 'RESET', {1: 'NRST', 2: 'GND'},
@@ -269,10 +272,11 @@ def feuille_usb():
                globals_=GLOBAL_MERE,
                notes=[
                    'USB3320 alimenté en 3,3 V externe : VBAT et VDD33 reliés au +3V3 (datasheet §5.5.1).\n'
-                   'VDD18 est une ENTRÉE : régulateur 1,8 V dédié (AP2112K-1.8). RVBUS = 1 kohm (Table 4.7).',
-                   'À CONFIRMER avant fabrication : code REFSEL[2:0] pour un quartz 24 MHz (datasheet Table 5-10).\n'
-                   'Chaque broche REFSEL a un pont haut et un pont bas ; ne monter que celui qui donne le bon code.',
-                   'Quartz 24 MHz : CL typ. 20 pF, ESR <= 30 ohms, charge 2 x 27 pF à recalculer (Table 4.11).',
+                   'VDD18 est une ENTRÉE : régulateur 1,8 V dédié (AP2112K-1.8).\n'
+                   'RVBUS = 10 kohms +/- 5 % pour un périphérique seul (Table 5-7 ; 1 kohm est réservé à l\'OTG).',
+                   'REFSEL[2:0] = 111 (les trois broches au VDDIO) : référence 24 MHz (Table 5-10 de DS00001792).',
+                   'Quartz 24 MHz : fondamental, CL 20 pF, ESR <= 30 ohms (Table 4-11). Charge 2 x 33 pF pour\n'
+                   '3 pF de broche et ~2 pF de circuit imprimé : à ajuster si le CL du quartz retenu diffère.',
                    'Routage ULPI : 12 signaux à 60 MHz, longueurs appariées (+/- 5 mm), sur plan de masse continu,\n'
                    'le plus courts possible. Paire D+/D- en 90 ohms différentiels. Blindage USB au châssis.',
                ])
@@ -284,20 +288,17 @@ def feuille_usb():
         29: 'ULPI_STP', 31: 'ULPI_DIR', 2: 'ULPI_NXT', 1: 'ULPI_CLK',
         3: 'ULPI_D0', 4: 'ULPI_D1', 5: 'ULPI_D2', 6: 'ULPI_D3', 7: 'ULPI_D4', 9: 'ULPI_D5',
         10: 'ULPI_D6', 13: 'ULPI_D7', 27: '~{ULPI_RST}',
-        8: 'REFSEL0', 11: 'REFSEL1', 14: 'REFSEL2',
+        8: '+3V3', 11: '+3V3', 14: '+3V3',
         18: 'USB_DP', 19: 'USB_DM', 22: 'PHY_VBUS', 23: '+3V3', 17: None, 16: None, 15: None,
         26: 'PHY_REFCLK', 25: 'PHY_XO', 24: 'RBIAS',
         21: '+3V3', 20: '+3V3', 32: '+3V3', 28: '+1V8_PHY', 30: '+1V8_PHY', 33: 'GND'})
-    add(sh, R('1k', 'PHY_VBUS', 'USB_VBUS'))
+    add(sh, R('10k', 'PHY_VBUS', 'USB_VBUS'))
     add(sh, R('8.06k 1%', 'RBIAS', 'GND'))
     add(sh, R('10k', '+3V3', '~{ULPI_RST}'))
-    for i in range(3):
-        add(sh, R('10k', '+3V3', 'REFSEL%d' % i, dnp=True, fields={'Note': 'pont haut REFSEL, voir Table 5-10'}))
-        add(sh, R('10k', 'REFSEL%d' % i, 'GND', fields={'Note': 'pont bas REFSEL, voir Table 5-10'}))
     sh.add('Device:Crystal_GND24', 'Y', '24MHz', {1: 'PHY_REFCLK', 3: 'PHY_XO', 2: 'GND', 4: 'GND'},
            footprint=XTAL3225)
-    add(sh, C('27pF', 'PHY_REFCLK', 'GND'))
-    add(sh, C('27pF', 'PHY_XO', 'GND'))
+    add(sh, C('33pF', 'PHY_REFCLK', 'GND'))
+    add(sh, C('33pF', 'PHY_XO', 'GND'))
     decoupling(sh, '+3V3', 'GND', ['2.2uF', '100nF', '100nF', '1uF'])
     sh.add('Regulator_Linear:AP2112K-1.8', 'U', 'AP2112K-1.8', {1: '+3V3', 3: '+3V3', 2: 'GND', 4: None,
                                                                5: '+1V8_PHY'})
@@ -328,7 +329,8 @@ def feuille_b2b(fille):
                    'Brochage commun aux deux cartes : une masse à côté de chaque horloge SPI, 4 broches 5 V\n'
                    '(UCC12050 des ports 5-8, ~0,7 A au pire), 2 broches 3,3 V (MCP2518FD et ISO1042 côté logique).',
                    'Carte mère : embase femelle (PinSocket). Carte fille : barrette mâle (PinHeader), montée en dessous.\n'
-                   'Liaison la plus courte possible (entretoises de 11 mm environ, à fixer avec la mécanique).',
+                   'Hauteur d\'empilage ~15 mm : le DB9 coudé de la carte fille (~12,6 mm de haut) passe sous\n'
+                   'la carte mère. Embase et barrette à choisir pour cette hauteur (voir docs/placement.md).',
                ] + (['Carte fille : la broche 35 (~FILLE_PRESENTE) est reliée à la masse pour signaler sa présence.']
                     if fille else []))
     fp = ('Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical' if fille
@@ -419,9 +421,14 @@ def projet(nom, titre, feuilles, ports):
         doc = schema.build_sheet(sh, nom, root_uuid, tb)
         schema.write(doc, os.path.join(out, sh.file))
     # fichiers de projet
-    with open(os.path.join(out, nom + '.kicad_pro'), 'w') as f:
-        json.dump({'meta': {'filename': nom + '.kicad_pro', 'version': 1},
-                   'sheets': [[root_uuid, '']], 'text_variables': {}}, f, indent=2)
+    # le .kicad_pro garde les réglages de la carte (règles, classes de nets) écrits par placer.py
+    pro = os.path.join(out, nom + '.kicad_pro')
+    d = json.load(open(pro)) if os.path.exists(pro) else {}
+    d.update({'meta': {'filename': nom + '.kicad_pro', 'version': 1}, 'sheets': [[root_uuid, '']]})
+    d.setdefault('text_variables', {})
+    with open(pro, 'w') as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+        f.write('\n')
     with open(os.path.join(out, 'sym-lib-table'), 'w') as f:
         f.write('(sym_lib_table\n  (version 7)\n  (lib (name "can8")(type "KiCad")'
                 '(uri "${KIPRJMOD}/../bibliotheque/can8.kicad_sym")(options "")'

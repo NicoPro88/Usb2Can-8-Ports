@@ -20,4 +20,5 @@ Carte électronique offrant **8 ports CAN** (jusqu'à **500 kbit/s** chacun) rel
 ## État
 
 - Architecture décidée : voir [`docs/decisions.md`](docs/decisions.md) (D1 à D6).
-- Schéma v0.1 (premier jet) : [`docs/schema-bloc.md`](docs/schema-bloc.md) et [`hardware/`](hardware/).
+- Schéma v0.2 : [`docs/schema-bloc.md`](docs/schema-bloc.md) et [`hardware/`](hardware/).
+- Placement des composants des deux cartes (non routé) : [`docs/placement.md`](docs/placement.md).
