@@ -39,7 +39,7 @@ Conséquences :
 
 ## D2. Isolation galvanique nécessaire ?
 
-**Statut : en discussion** (recommandation : isolation par port)
+**Statut : décidé le 2026-11-20** : option c, isolation par port.
 
 ### Options
 
@@ -55,19 +55,70 @@ Conséquences :
 - ISO1042 et ADM3053 sont compatibles CAN FD : l'option c reste cohérente avec D1.
 - L'isolation par port pèse sur le budget d'alimentation (question 4) : 8 DC/DC isolés à ~70 % de rendement ajoutent ~2 à 4 W, au-delà de ce qu'un port USB 2.0 standard fournit (2,5 W).
 
-### Recommandation
+### Décision
 
-Option **c** avec ISO1042 + DC/DC isolé par port, si la carte doit se brancher sur des systèmes dont la masse n'est pas maîtrisée (véhicules, machines, bancs différents). Option **a** si la carte est destinée uniquement à un banc avec masse commune.
+Option **c** retenue : chaque port a sa propre barrière d'isolation, avec un transceiver isolé ISO1042 (compatible CAN FD) et un petit convertisseur DC/DC isolé 5 V dédié.
+
+Conséquences :
+- 8 domaines de masse isolés (GND_ISO_1 à GND_ISO_8), séparés de la masse USB/MCU et entre eux.
+- Le niveau d'isolement réel est fixé par le maillon le plus faible (DC/DC, distances d'isolement sur le PCB) : viser au moins 1 kV, valeur exacte à fixer avec le choix du DC/DC.
+- Règles de routage : saignée sans cuivre sous chaque barrière, distances de fuite et d'isolement respectées jusqu'au connecteur.
+- Budget d'alimentation alourdi (voir D4) : l'USB 2.0 seul (2,5 W) ne suffit plus.
 
 ---
 
 ## D3. Connecteurs
 
-**Statut : à traiter**
+**Statut : en discussion** (recommandation : DB9 au brochage CiA 303-1, ou borniers pour un câblage à demeure)
+
+### Options
+
+| Option | Encombrement pour 8 ports | Coût unitaire | Conséquences |
+|---|---|---|---|
+| a. DB9 mâle, brochage CiA 303-1 (2 = CAN_L, 7 = CAN_H, 3 = GND, 9 = V+ optionnel) | ~260 mm en ligne, ~130 mm avec 4 blocs DB9 doubles superposés | ≈ 1 à 4 € | Standard de fait (PEAK, Kvaser, Vector) : câbles et adaptateurs du commerce utilisables tels quels. Encombrant. |
+| b. Borniers débrochables 3 ou 4 points (CAN_H, CAN_L, GND_ISO, blindage) | ~100 à 130 mm | ≈ 1 à 2 € | Compact, câblage direct sur fils, pratique en banc ou armoire industrielle. Pas de câble standard, risque d'erreur de câblage. |
+| c. RJ45 (CiA 303-1 : 1 = CAN_H, 2 = CAN_L, 3 = GND) | ~70 mm avec deux blocs 2×4 | ≈ 1 à 3 € | Très compact, câbles bon marché. Risque de confusion avec un port Ethernet, brochage moins répandu que le DB9. |
+| d. Un connecteur haute densité (ex. DSUB 37) + câble éclaté | ~70 mm | ≈ 5 à 10 € + câble | Une seule prise sur la carte. Nécessite de fabriquer un faisceau, isolement entre ports à vérifier dans le connecteur. |
+
+### Points à retenir
+
+- Avec l'isolation par port (D2), chaque connecteur porte sa propre masse isolée : le connecteur doit garder les distances d'isolement entre ports (DB9 et borniers séparés le font naturellement).
+- La terminaison 120 Ω commutable reste sur la carte, quel que soit le connecteur.
+
+### Recommandation
+
+Option **a** si la carte doit fonctionner avec les câbles et outils CAN du commerce ; option **b** si elle est destinée à être câblée à demeure dans un banc ou une armoire.
+
+---
 
 ## D4. Alimentation
 
-**Statut : à traiter**
+**Statut : en discussion** (recommandation : entrée externe large plage + USB-C, au choix)
+
+### Budget de puissance estimé
+
+| Bloc | Typique | Pire cas |
+|---|---|---|
+| MCU + PHY USB HS + 8 contrôleurs SPI + LED | ≈ 1 à 1,5 W | ≈ 1,5 W |
+| 8 côtés isolés (ISO1042 + DC/DC à ~60 % de rendement) | ≈ 2 W (bus peu chargés) | ≈ 5 W (bus dominants en continu) |
+| **Total** | **≈ 3 à 3,5 W** | **≈ 6,5 W** |
+
+Un port USB 2.0 fournit 2,5 W (500 mA), un port USB 3.x 4,5 W (900 mA) : aucun des deux ne couvre le pire cas.
+
+### Options
+
+| Option | Composants | Surcoût | Conséquences |
+|---|---|---|---|
+| a. USB seul (USB-A / micro / USB-C sans négociation) | Rien de plus | 0 € | Écarté : insuffisant avec l'isolation par port. |
+| b. USB-C 5 V / 3 A (15 W) | Connecteur USB-C + résistances CC, détection du courant annoncé | ≈ 1 € | Un seul câble. Fonctionne seulement si le port hôte annonce 1,5 A ou 3 A (beaucoup de ports PC USB-A ne le font pas). |
+| c. Alimentation externe seule (ex. 9 à 36 V), USB pour les données | Jack ou bornier + régulateur abaisseur + protections (inversion, surtension) | ≈ 3 à 5 € | Indépendant du PC, compatible 12/24 V véhicule et industriel. Un bloc secteur ou un câble d'alimentation en plus. |
+| d. Les deux : entrée externe 9 à 36 V **ou** USB-C | c + b + sélection automatique (diode idéale, ex. LM66100) | ≈ 4 à 7 € | Un seul câble USB-C sur un port capable, alimentation externe sinon. Le firmware peut lire le courant annoncé et signaler une alimentation insuffisante. |
+
+### Recommandation
+
+Option **d** : USB-C pour la simplicité sur un PC récent, entrée externe 9 à 36 V pour tous les autres cas (PC ancien, véhicule, armoire 24 V).
+
+---
 
 ## D5. Logiciel côté PC
 
