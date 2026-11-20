@@ -1,6 +1,6 @@
 Quantité,Valeur,Symbole,Empreinte,Non monté,Références
 1,SWD,Connector:Conn_ARM_JTAG_SWD_10,Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical,,J1101
-4,DB9 mâle,Connector:DE9_Plug_MountingHoles,Connector_Dsub:DSUB-9_Male_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm,,J101 J201 J301 J401
+4,DB9 mâle,Connector:DE9_Pins_MountingHoles,Connector_Dsub:DSUB-9_Pins_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm,,J101 J201 J301 J401
 1,"MSTB 2,5/2-GF-5,08",Connector:Screw_Terminal_01x02,"Connector_Phoenix_MSTB:PhoenixContact_MSTB_2,5_2-GF-5,08_1x02_P5.08mm_Horizontal_ThreadedFlange",,J1001
 1,USB-B,Connector:USB_B,Connector_USB:USB_B_OST_USB-B1HSxx_Horizontal,,J1201
 1,UART debug,Connector_Generic:Conn_01x03,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,,J1102

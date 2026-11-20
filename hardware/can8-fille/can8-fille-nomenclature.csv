@@ -1,5 +1,5 @@
 Quantité,Valeur,Symbole,Empreinte,Non monté,Références
-4,DB9 mâle,Connector:DE9_Plug_MountingHoles,Connector_Dsub:DSUB-9_Male_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm,,J501 J601 J701 J801
+4,DB9 mâle,Connector:DE9_Pins_MountingHoles,Connector_Dsub:DSUB-9_Pins_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm,,J501 J601 J701 J801
 1,Carte à carte,Connector_Generic:Conn_02x20_Odd_Even,Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical,,J1301
 22,100nF,Device:C,Capacitor_SMD:C_0603_1608Metric,,C501 C505 C507 C509 C511 C601 C605 C607 C609 C611 C701 C705 C707 C709 C711 C801 C805 C807 C809 C811 C1302 C1304
 9,10uF,Device:C,Capacitor_SMD:C_0805_2012Metric,,C510 C512 C610 C612 C710 C712 C810 C812 C1303

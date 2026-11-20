@@ -106,16 +106,16 @@ Les règles et les classes sont dans les fichiers `.kicad_pro`. Elles correspond
 | CAN | CANH, CANL, TERM | 0,3 mm | 0,2 mm |
 | USB | USB_DP, USB_DM | paire 0,2 / 0,15 mm, provisoire | 0,15 mm |
 
-La largeur et l'écart de la paire USB doivent être recalculés pour 90 Ω différentiels avec l'empilage du fabricant retenu.
+La largeur et l'écart de la paire USB doivent être recalculés pour 90 Ω différentiels avec l'empilage du fabricant retenu. *v0.3 : paire 0,2 / 0,25 mm, environ 90 Ω avec l'empilage JLC04161H-3313, voir [`routage.md`](routage.md).*
 
 ## 7. Points à valider
 
 1. **Hauteur d'empilage et connecteur carte à carte** : 15 mm proposés, à confirmer avec le DB9 et le boîtier choisis, puis choisir l'embase et la barrette correspondantes.
 2. **LED des ports 5 à 8** : cachées sous la carte mère. On peut accepter (l'état des ports est aussi lisible par USB), ajouter des guides de lumière, ou ouvrir des fenêtres au-dessus d'elles comme pour les interrupteurs.
 3. **Position des trous de fixation** : 6 trous sur la mère, 4 sur la fille, à 4 mm des bords. À ajuster au boîtier.
-4. **Routage** : ULPI le plus court possible avec longueurs appariées, paire USB à 90 Ω, alimentation à découpage en boucles courtes, vias de couture des plans, plans des couches externes.
-5. **Sérigraphie** : les repères des petits composants se chevauchent. Ils seront rangés après le routage.
-6. **DRC de KiCad 8 ou 9** à la première ouverture, en plus du DRC de KiCad 7 lancé par le script.
+4. ~~**Routage**~~ : fait en v0.3, voir [`routage.md`](routage.md).
+5. ~~**Sérigraphie**~~ : repères rangés en v0.3 (masqués là où il n'y a pas de place).
+6. ~~**DRC de KiCad 8 ou 9**~~ : fait en v0.3 avec KiCad 9, voir [`routage.md`](routage.md).
 
 ## 8. Régénérer
 

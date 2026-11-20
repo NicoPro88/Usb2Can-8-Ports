@@ -179,7 +179,8 @@ Total des composants clés : ≈ 130 € par carte complète, hors passifs et ci
 ## 9. Reste à vérifier
 
 1. **DB9** : l'empreinte retenue (`DSUB-9_Male_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm`) correspond aux DB9 coudés à fixation par vis, avec les broches à 9,9 mm du bord. La référence exacte est à choisir avec le boîtier.
-2. **UCC12050** : la broche 16 est notée GNDS d'après la table des broches. À confirmer sur le dessin du boîtier.
-3. **ERC de KiCad 8 ou 9** à lancer à la première ouverture, en complément des contrôles automatiques.
-4. **Quartz** : ajuster les condensateurs de charge au CL réel des quartz achetés (24, 25 et 40 MHz).
-5. **Placement** : hauteur d'empilage, connecteur carte à carte, LED des ports 5 à 8 et trous de fixation, voir [`placement.md`](placement.md) § 7.
+2. ~~**UCC12050** : broche 16~~ : vérifié en v0.3, la broche 16 est bien GNDS (table des broches de TI), et SEL relié à VISO donne 5,0 V.
+3. ~~**ERC de KiCad**~~ : fait en v0.3 avec KiCad 9 sur les deux schémas, 0 erreur (seulement des avertissements « symbole différent de la bibliothèque », normaux pour des schémas générés).
+4. **AP7361C** : brochage vérifié en v0.3 sur la fiche Diodes DS37274 (boîtier SOT223, suffixe « E ») : 1 = IN (+5V), 2 = GND, 3 = OUT (+3V3), comme sur la carte (la languette de l'empreinte KiCad est la broche 2, donc sur GND ; la fiche ne la décrit pas, la convention SOT-223 est celle-là). **Commander la référence AP7361C-33E-13, pas -33ER-13** : la version « ER » (SOT223R) a un autre brochage (1 = GND, 2 = OUT, 3 = IN).
+5. **Quartz** : ajuster les condensateurs de charge au CL réel des quartz achetés (24, 25 et 40 MHz).
+6. **Placement** : hauteur d'empilage, connecteur carte à carte, LED des ports 5 à 8 et trous de fixation, voir [`placement.md`](placement.md) § 7.

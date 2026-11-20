@@ -28,7 +28,7 @@ from schema import S, Sheet, uid, font  # noqa: E402
 
 HW = os.path.normpath(os.path.join(HERE, '..'))
 DATE = '2026-11-20'
-REV = 'v0.2'
+REV = 'v0.3'
 
 # ------------------------------------------------------------------ empreintes
 R0603 = 'Resistor_SMD:R_0603_1608Metric'
@@ -115,10 +115,10 @@ def feuille_port(project):
     sh.add('Switch:SW_SPST', 'SW', 'Terminaison', {1: 'CANH', 2: 'TERM'},
            footprint='Button_Switch_SMD:SW_DIP_SPSTx01_Slide_6.7x4.1mm_W8.61mm_P2.54mm_LowProfile')
     add(sh, R('120 1%', 'TERM', 'CANL', fp=R1206))
-    sh.add('Connector:DE9_Plug_MountingHoles', 'J', 'DB9 mâle', {
+    sh.add('Connector:DE9_Pins_MountingHoles', 'J', 'DB9 mâle', {
         2: 'CANL', 7: 'CANH', 3: 'GND_ISO', 6: 'GND_ISO', 5: 'CHASSIS', 1: None, 4: None, 8: None,
         9: None, 0: 'CHASSIS'},
-        footprint='Connector_Dsub:DSUB-9_Male_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm')
+        footprint='Connector_Dsub:DSUB-9_Pins_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm')
     return sh
 
 
@@ -135,7 +135,8 @@ def feuille_alim():
                    'Budget : ~6,5 W au pire (D4). 5 V : 8 x UCC12050 + LDO 3,3 V. 3,3 V : MCU, PHY, 8 x MCP2518FD.',
                    'Châssis : trous de fixation et blindages (USB, DB9) reliés à GND par 1 Mohm // 4,7 nF 2 kV.',
                ])
-    sh.pwr_flags = ['GND', '+VIN', '+5V']
+    # GND est déjà fourni par la broche 4 du connecteur USB (sortie d'alimentation) : pas de PWR_FLAG
+    sh.pwr_flags = ['+VIN', '+5V']
     sh.add('Connector:Screw_Terminal_01x02', 'J', 'MSTB 2,5/2-GF-5,08', {1: 'VIN_BRUT', 2: 'GND'},
            footprint='Connector_Phoenix_MSTB:PhoenixContact_MSTB_2,5_2-GF-5,08_1x02_P5.08mm_Horizontal_ThreadedFlange')
     sh.add('Device:Polyfuse', 'F', '2920L110/60MR', {1: 'VIN_BRUT', 2: 'VIN_FUS'},
