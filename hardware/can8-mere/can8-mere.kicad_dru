@@ -1,0 +1,8 @@
+(version 1)
+
+# Les plans de cuivre (GND, GND_ISO) s'écartent de 1 mm du cuivre relié au châssis
+# (blindages USB et DB9, trous de fixation, piste du châssis) : tenue aux décharges.
+(rule "Plans / châssis"
+	(condition "A.NetName == 'CHASSIS' && B.Type == 'Zone' && B.NetName != 'CHASSIS'")
+	(constraint clearance (min 1.0mm)))
+

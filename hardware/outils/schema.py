@@ -55,13 +55,18 @@ def _load(lib):
 
 _flat = {}
 
+# Symboles renommés dans KiCad 8+ : nom KiCad 9 -> nom dans la bibliothèque KiCad 7 lue ici.
+# Le schéma porte le nom KiCad 9 (« mise à jour depuis la bibliothèque » possible),
+# le dessin vient de la bibliothèque KiCad 7 (mêmes broches aux mêmes positions).
+RENOMMES = {'Connector:DE9_Pins_MountingHoles': 'DE9_Plug_MountingHoles'}
+
 
 def lib_symbol(lib_id):
     """Symbole aplati (héritage « extends » résolu), nommé « Lib:Nom »."""
     if lib_id in _flat:
         return _flat[lib_id]
     lib, name = lib_id.split(':', 1)
-    src = _load(lib)[name]
+    src = _load(lib)[RENOMMES.get(lib_id, name)]
     ext = find(src, 'extends')
     if ext:
         pname = ext[0][1]
@@ -83,6 +88,9 @@ def lib_symbol(lib_id):
     else:
         out = copy.deepcopy(src)
         out[1] = lib_id
+        for e in out[2:]:
+            if isinstance(e, list) and e[0] == 'symbol' and src[1] != name:
+                e[1] = name + e[1][len(src[1]):]
     out = [e for e in out if not (isinstance(e, list) and e[0] == 'extends')]
     _flat[lib_id] = out
     return out

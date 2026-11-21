@@ -6,7 +6,7 @@
   (title_block
     (title "Port CAN isolé (MCP2518FD + ISO1042 + UCC12050)")
     (date "2026-11-20")
-    (rev "v0.1 (brouillon)")
+    (rev "v0.3")
     (company "Usb2Can-8-Ports")
     (comment 1 "Carte mère : STM32H723 + USB HS + alimentation + ports CAN 1 à 4")
     (comment 2 "Généré par hardware/outils/generer_schemas.py"))
@@ -1591,7 +1591,7 @@
             (effects
               (font
                 (size 1.27 1.27)))))))
-    (symbol "Connector:DE9_Plug_MountingHoles"
+    (symbol "Connector:DE9_Pins_MountingHoles"
       (pin_names
         (offset 1.016) hide)
       (in_bom yes)
@@ -1631,7 +1631,7 @@
         (effects
           (font
             (size 1.27 1.27)) hide))
-      (symbol "DE9_Plug_MountingHoles_0_1"
+      (symbol "DE9_Pins_MountingHoles_0_1"
         (circle
           (center -1.778 -10.16)
           (radius 0.762)
@@ -1797,7 +1797,7 @@
             (type default))
           (fill
             (type outline))))
-      (symbol "DE9_Plug_MountingHoles_1_1"
+      (symbol "DE9_Pins_MountingHoles_1_1"
         (pin passive line
           (at 0 -15.24 90)
           (length 3.81)
@@ -5811,7 +5811,7 @@
       (justify right bottom))
     (uuid 4f80d5e9-0b65-5a09-983c-ff32f5717cc8))
   (symbol
-    (lib_id "Connector:DE9_Plug_MountingHoles")
+    (lib_id "Connector:DE9_Pins_MountingHoles")
     (at 243.84 96.52 0)
     (unit 1)
     (in_bom yes)
@@ -5828,7 +5828,7 @@
       (effects
         (font
           (size 1.27 1.27))))
-    (property "Footprint" "Connector_Dsub:DSUB-9_Male_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm"
+    (property "Footprint" "Connector_Dsub:DSUB-9_Pins_Horizontal_P2.77x2.84mm_EdgePinOffset9.90mm_Housed_MountingHolesOffset11.32mm"
       (at 243.84 96.52 0)
       (effects
         (font
