@@ -190,7 +190,9 @@ SPI_PINS = {  # numéro de broche LQFP144 -> net
     # chip-selects et interruptions
     78: '~{CS1}', 79: '~{CS2}', 80: '~{CS3}', 81: '~{CS4}',
     58: '~{CS5}', 59: '~{CS6}', 60: '~{CS7}', 63: '~{CS8}',
-    82: '~{INT1}', 85: '~{INT2}', 86: '~{INT3}', 87: '~{INT4}',
+    # ~INT1 et ~INT2 (ports 1 et 2, à gauche) sur PG0 / PG1, côté gauche du boîtier ; ~INT3 sur PA11,
+    # sous le boîtier près du port 3 : la rangée du bas, vers le connecteur carte à carte, est saturée
+    56: '~{INT1}', 57: '~{INT2}', 103: '~{INT3}', 87: '~{INT4}',
     88: '~{INT5}', 89: '~{INT6}', 90: '~{INT7}', 91: '~{INT8}',
 }
 ULPI_PINS = {41: 'ULPI_CLK', 26: 'ULPI_STP', 28: 'ULPI_DIR', 29: 'ULPI_NXT', 37: 'ULPI_D0',
@@ -211,7 +213,7 @@ def feuille_mcu():
                notes=[
                    'Affectation des broches : voir docs/schema-bloc.md. SPI1 = ports 1-2, SPI2 = ports 3-4 (carte mère),\n'
                    'SPI3 = ports 5-6, SPI4 = ports 7-8 (carte fille). SPI5 (PF7/PF8/PF9) et SPI6 (PG13/PG12/PG14) restent libres.',
-                   'Interruptions sur des lignes EXTI toutes différentes (2, 3, 4, 5, 6, 13, 14, 15).',
+                   'Interruptions sur des lignes EXTI toutes différentes (0, 1, 11, 2, 3, 4, 5, 6).',
                    'ULPI : PC2_C et PC3_C passent par un interrupteur analogique interne à fermer dans le firmware\n'
                    '(SYSCFG_PMCR, bits PC2SO / PC3SO), sinon DIR et NXT ne sont pas reliés à l\'OTG_HS.',
                    'HSE 25 MHz pour l\'horloge système ; l\'horloge ULPI 60 MHz vient du PHY USB3320.',

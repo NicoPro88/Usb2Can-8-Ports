@@ -7,8 +7,8 @@ Deux cartes empilées (décision D3) :
 | `can8-mere/` | Carte mère, 4 couches | STM32H723ZGT6, PHY USB3320 (USB HS), alimentation 9-36 V, ports CAN 1 à 4 |
 | `can8-fille/` | Carte fille, 4 couches | ports CAN 5 à 8, reliée par un connecteur 2 × 20 |
 | `bibliotheque/` | | symboles absents de la bibliothèque KiCad (USB3320C, ISO1042, UCC12050, MCP2518FD SOIC) |
-| `outils/` | | générateur des schémas, vérification de la netlist, placement, routage, sorties de fabrication |
-| `fab/v0.3/` | | sorties de la v0.3 : nomenclature, placement CMS, PDF, rendus ; Gerber et perçages pour la carte fille seulement (le modèle STEP est régénéré par `outils/exporter.sh`, hors git) |
+| `outils/` | | générateur des schémas, vérification de la netlist, placement, routage, sorties de fabrication ; `retouches_mere_v03/` : trace des retouches de la carte mère |
+| `fab/v0.3/` | | sorties de la v0.3 : Gerber et perçages, nomenclature, placement CMS, PDF, rendus, pour les deux cartes (le modèle STEP est régénéré par `outils/exporter.sh`, hors git) |
 
 Chaque projet contient le schéma KiCad (`.kicad_pro`, `.kicad_sch`), un export PDF (`*-schema.pdf`), la nomenclature (`*-nomenclature.csv`), le circuit imprimé routé (`.kicad_pcb`, règles complémentaires dans `.kicad_dru`) et la vue PDF du placement v0.2 (`*-placement.pdf`). Les projets s'ouvrent dans **KiCad 9**.
 Le schéma-bloc, l'affectation des broches et les points à vérifier sont dans [`docs/schema-bloc.md`](../docs/schema-bloc.md).
@@ -18,9 +18,9 @@ Le schéma-bloc, l'affectation des broches et les points à vérifier sont dans 
 4 couches, plans de masse et d'alimentation internes pleins. DRC de KiCad 9 sans erreur avec les règles du projet, parité schéma / circuit comprise, sur les deux cartes.
 
 - **Carte fille** : routée à 100 %, sorties de fabrication complètes dans `fab/v0.3/can8-fille/`.
-- **Carte mère** : routée sauf 10 liaisons, autour du PHY USB et du STM32. **Pas encore fabricable** : pas de Gerber tant que le DRC trouve une liaison manquante.
+- **Carte mère** : routée à 100 % après une deuxième passe (placement retouché autour du PHY USB, bus ULPI re-tiré, ~INT1 à ~INT3 déplacées sur PG0, PG1, PA11), sorties de fabrication complètes dans `fab/v0.3/can8-mere/`. Avant de commander : relecture dans KiCad et vias dans les pastilles à faire boucher ou à décaler (`docs/routage.md` § 7).
 
-Méthode, résultats, liste des liaisons restantes, ce qui est vérifié et ce qui ne l'est pas : [`docs/routage.md`](../docs/routage.md).
+Méthode, résultats, retouches de la carte mère, ce qui est vérifié et ce qui ne l'est pas : [`docs/routage.md`](../docs/routage.md).
 
 ```sh
 # routage (KiCad 9 + Freerouting 2.5), voir docs/routage.md § 8

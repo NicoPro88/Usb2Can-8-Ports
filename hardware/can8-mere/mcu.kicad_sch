@@ -4406,12 +4406,52 @@
         (size 1.27 1.27))
       (justify right bottom))
     (uuid cc873ff2-11f2-5c65-83c0-27a2c4cdb8db))
-  (no_connect
-    (at 48.26 78.74)
-    (uuid 23306dbf-47af-52c8-a243-2eff8c629e2a))
-  (no_connect
-    (at 48.26 81.28)
-    (uuid 54690281-c72a-5d4a-aeb0-09318d304aa3))
+  (wire
+    (pts
+      (xy 48.26 78.74)
+      (xy 45.72 78.74))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 031e069c-d72b-54c7-8976-8e4d7049c4f9))
+  (global_label "~{INT1}"
+    (shape passive)
+    (at 45.72 78.74 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 8ae218a2-69d2-5423-b3f2-36f1b37501cf)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 45.72 78.74 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
+  (wire
+    (pts
+      (xy 48.26 81.28)
+      (xy 45.72 81.28))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid 424d40f6-2656-5db0-a802-59ef19843cae))
+  (global_label "~{INT2}"
+    (shape passive)
+    (at 45.72 81.28 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify right))
+    (uuid 59b985dd-50c4-555b-a3c0-ad799f92b7f5)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 45.72 81.28 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify right) hide)))
   (wire
     (pts
       (xy 48.26 83.82)
@@ -4953,9 +4993,29 @@
   (no_connect
     (at 116.84 76.2)
     (uuid eb40faef-09d1-5486-a3d2-7c3c439a19cf))
-  (no_connect
-    (at 116.84 78.74)
-    (uuid b5e86be7-0cae-56f6-9210-9ee049c9979d))
+  (wire
+    (pts
+      (xy 116.84 78.74)
+      (xy 119.38 78.74))
+    (stroke
+      (width 0)
+      (type default))
+    (uuid bfef69cb-371e-5ea5-97cf-d289aafe0e38))
+  (global_label "~{INT3}"
+    (shape passive)
+    (at 119.38 78.74 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (size 1.27 1.27))
+      (justify left))
+    (uuid a043f492-d0a5-565a-83f1-5551a5516f24)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 119.38 78.74 0)
+      (effects
+        (font
+          (size 1.27 1.27))
+        (justify left) hide)))
   (no_connect
     (at 116.84 81.28)
     (uuid da727448-5608-540d-9145-7007f36ecb8f))
@@ -5583,75 +5643,15 @@
         (font
           (size 1.27 1.27))
         (justify left) hide)))
-  (wire
-    (pts
-      (xy 116.84 213.36)
-      (xy 119.38 213.36))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid 50e764b4-f274-5aee-ac23-896a75145515))
-  (global_label "~{INT1}"
-    (shape passive)
-    (at 119.38 213.36 0)
-    (fields_autoplaced)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left))
-    (uuid 439d9f4e-89d9-5ec0-8231-fe636122eafa)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 119.38 213.36 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (justify left) hide)))
-  (wire
-    (pts
-      (xy 116.84 215.9)
-      (xy 119.38 215.9))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid cab0de03-bded-536c-87ea-fa49f7e75005))
-  (global_label "~{INT2}"
-    (shape passive)
-    (at 119.38 215.9 0)
-    (fields_autoplaced)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left))
-    (uuid f45d5bef-084b-517f-a637-12bb759fbb40)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 119.38 215.9 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (justify left) hide)))
-  (wire
-    (pts
-      (xy 116.84 218.44)
-      (xy 119.38 218.44))
-    (stroke
-      (width 0)
-      (type default))
-    (uuid ce34ef2e-effd-538a-8425-c4218ef94c18))
-  (global_label "~{INT3}"
-    (shape passive)
-    (at 119.38 218.44 0)
-    (fields_autoplaced)
-    (effects
-      (font
-        (size 1.27 1.27))
-      (justify left))
-    (uuid 63e9846e-68ff-5dd9-bffa-158b47239edf)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 119.38 218.44 0)
-      (effects
-        (font
-          (size 1.27 1.27))
-        (justify left) hide)))
+  (no_connect
+    (at 116.84 213.36)
+    (uuid 74ed6e74-4c38-57ef-b013-24eeb7fb6151))
+  (no_connect
+    (at 116.84 215.9)
+    (uuid 5d873cba-e294-5e50-b29f-329ef0de5794))
+  (no_connect
+    (at 116.84 218.44)
+    (uuid 61a45143-85ed-5546-8971-5485b125f1e0))
   (wire
     (pts
       (xy 81.28 228.6)
@@ -10623,7 +10623,7 @@
         (size 1.27 1.27))
       (justify left top))
     (uuid ea96a407-5dc1-58e5-ba83-8b5ae30b8ec2))
-  (text "Interruptions sur des lignes EXTI toutes différentes (2, 3, 4, 5, 6, 13, 14, 15)."
+  (text "Interruptions sur des lignes EXTI toutes différentes (0, 1, 11, 2, 3, 4, 5, 6)."
     (at 25.4 317.8 0)
     (effects
       (font

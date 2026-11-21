@@ -81,7 +81,7 @@ Le LDO 3,3 V dissipe ≈ 0,85 W au pire (1,7 V × 0,5 A) : prévoir une surface 
 | SPI3, ports 5-6 | SCK PC10, MISO PC11, MOSI PC12 | via le connecteur carte à carte |
 | SPI4, ports 7-8 | SCK PE12, MISO PE13, MOSI PE14 | via le connecteur carte à carte |
 | Chip-selects | CS1 PD9, CS2 PD10, CS3 PD11, CS4 PD12, CS5 PE7, CS6 PE8, CS7 PE9, CS8 PE10 | GPIO, pull-up 10 kohms côté contrôleur |
-| Interruptions | INT1 PD13, INT2 PD14, INT3 PD15, INT4 PG2, INT5 PG3, INT6 PG4, INT7 PG5, INT8 PG6 | 8 lignes EXTI distinctes (13, 14, 15, 2, 3, 4, 5, 6) |
+| Interruptions | INT1 PG0, INT2 PG1, INT3 PA11, INT4 PG2, INT5 PG3, INT6 PG4, INT7 PG5, INT8 PG6 | 8 lignes EXTI distinctes (0, 1, 11, 2, 3, 4, 5, 6). INT1 à INT3 déplacées au routage v0.3 (elles étaient sur PD13, PD14, PD15) pour dégager la rangée du bas du boîtier |
 | SWD | SWDIO PA13, SWCLK PA14, SWO PB3, NRST | connecteur Cortex 10 broches 1,27 mm |
 | UART de débogage | TX PB6, RX PB7 (USART1) | barrette 3 broches |
 | LED | état PE0, erreur PE1 | |

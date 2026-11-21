@@ -319,12 +319,19 @@ class Grille:
         return m[i0 - a0:i0 - a0 + (i1 - i0), j0 - b0:j0 - b0 + (j1 - j0)]
 
     def astar(self, fen, libre, via, sources, cibles, max_noeuds=600_000, cout=(1.0, 1.0), passe=None,
-              penalite=15.0, surcout=None):
-        """A* de sources vers cibles ({couche: masque}). Renvoie [(couche, i, j), ...] ou None."""
+              penalite=15.0, surcout=None, sens=None):
+        """A* de sources vers cibles ({couche: masque}). Renvoie [(couche, i, j), ...] ou None.
+        sens : {couche: 'h' ou 'v'}, direction préférée sur la couche (routage « horizontal sur
+        une face, vertical sur l'autre », pour croiser un bus) ; l'autre direction coûte 3 fois
+        plus, la diagonale 1,6 fois."""
         i0, i1, j0, j1 = fen
         h, w = i1 - i0, j1 - j0
         couches = list(self.routage)
         cout = tuple(cout) + (3.0,) * (len(couches) - len(cout))
+        facs = []
+        for L in couches:
+            s = (sens or {}).get(L)
+            facs.append((1.0, 3.0, 1.6) if s == 'h' else (3.0, 1.0, 1.6) if s == 'v' else (1.0, 1.0, 1.0))
         if passe is None:
             lib = [libre[L].tobytes() for L in couches]
             cher = [bytes(h * w) for L in couches]
@@ -386,6 +393,7 @@ class Grille:
             lk = lib[k]
             ck = cout[k]
             hk = cher[k]
+            fh, fv, fd = facs[k]
             for di, dj, c in DIRS:
                 a, b = i + di, j + dj
                 if a < 0 or b < 0 or a >= h or b >= w:
@@ -396,7 +404,7 @@ class Grille:
                 if di and dj and not (lk[i * w + b] and lk[a * w + j]):
                     continue
                 m = k * hw + r2
-                ng = gc + c * ck + hk[r2]
+                ng = gc + c * ck * (fd if di and dj else fv if di else fh) + hk[r2]
                 if ng < g.get(m, 1e18):
                     g[m] = ng
                     par[m] = n
@@ -521,7 +529,8 @@ class Grille:
         bb = item.GetBoundingBox()
         return mm(bb.GetX()), mm(bb.GetY()), mm(bb.GetRight()), mm(bb.GetBottom())
 
-    def relier(self, a, b, largeurs, isolement, cout=(1.0, 1.0), marges=(4.0, 12.0, 40.0), vias=True):
+    def relier(self, a, b, largeurs, isolement, cout=(1.0, 1.0), marges=(4.0, 12.0, 40.0), vias=True,
+               sens=None):
         """Piste de l'élément a à l'élément b (même net). Renvoie les éléments créés ou None.
         vias=False : sans changer de couche (liaisons courtes des nets de plan : une via
         irait directement au plan)."""
@@ -535,12 +544,13 @@ class Grille:
                 libre, via = self.libres(net, fen, w, isolement)
                 if not vias:
                     via = np.zeros_like(via)
-                ch = self.astar(fen, libre, via, src, {L: cib[L] & libre[L] for L in cib}, cout=cout)
+                ch = self.astar(fen, libre, via, src, {L: cib[L] & libre[L] for L in cib}, cout=cout,
+                                sens=sens)
                 if ch:
                     return self.poser(a.GetNet(), self.lisser(ch, libre, fen), w, False)
         return None
 
-    def relier_souple(self, a, b, largeur, isolement, retirer, marge=8.0, penalite=15.0):
+    def relier_souple(self, a, b, largeur, isolement, retirer, marge=8.0, penalite=15.0, sens=None):
         """Routage négocié : comme relier, mais le chemin peut traverser des pistes non
         verrouillées d'autres nets (chaque case traversée coûte penalite) ; les pistes touchées
         sont arrachées (retirer(piste)) et seront re-routées au tour suivant.
@@ -555,7 +565,7 @@ class Grille:
         hist = getattr(self, 'hist', None)
         sur = {L: hist[L][i0:i1, j0:j1] for L in ROUTAGE} if hist is not None else None
         ch = self.astar(fen, libre, via, src, {L: cib[L] & passe[L] for L in cib}, passe=passe,
-                        penalite=penalite, max_noeuds=1_500_000, surcout=sur)
+                        penalite=penalite, max_noeuds=1_500_000, surcout=sur, sens=sens)
         if not ch:
             return None
         if hist is not None:
